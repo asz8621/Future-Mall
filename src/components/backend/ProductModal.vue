@@ -1,13 +1,11 @@
 <template>
-<Loading :active="isLoading"></Loading>
-<div class="modal fade" id="productModal" tabindex="-1"
-  aria-labelledby="productModalLabel" aria-hidden="true" ref="productModal">
+<div class="modal fade" id="compoundModal" tabindex="-1"
+  aria-labelledby="compoundModalLabel" aria-hidden="true" ref="compoundModal">
   <div class="modal-dialog modal-xl ">
-    <!-- 新增、編輯 -->
-    <div class="modal-content border-0" v-if="modalState !== 'del'">
+    <div class="modal-content border-0">
       <div class="modal-header bg-dark text-white">
-        <h5 class="modal-title" id="productModalLabel" v-if="modalState === 'add'">新增產品</h5>
-        <h5 class="modal-title" id="productModalLabel" v-else>編輯產品</h5>
+        <h5 class="modal-title" id="compoundModalLabel" v-if="modalState === 'add'">新增產品</h5>
+        <h5 class="modal-title" id="compoundModalLabel" v-else>編輯產品</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -116,29 +114,12 @@
       </div>
     </div>
 
-    <!-- 刪除 -->
-    <div class="modal-content border-0" v-else>
-      <div class="modal-header bg-danger text-white">
-        <h5 class="modal-title" id="delModalLabel">刪除產品</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div>你確定要刪除 <span class="text-danger">{{product.title}}</span> ，確認後資料將無法復原。</div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary"
-                data-bs-dismiss="modal">取消
-        </button>
-        <button type="button" class="btn btn-primary" @click.prevent="delProduct">確認</button>
-      </div>
-    </div>
-
   </div>
 </div>
 </template>
 
 <script>
-import Modal from 'bootstrap/js/dist/modal';
+import modalMixin from '@/mixins/modalMixin';
 
 export default {
   props: {
@@ -152,7 +133,6 @@ export default {
   },
   data() {
     return {
-      modal: {},
       tempProduct: {},
       isLoading: false,
     };
@@ -162,16 +142,9 @@ export default {
       this.tempProduct = this.product;
     },
   },
-  mounted() {
-    this.modal = new Modal(this.$refs.productModal);
-  },
+  mixins: [modalMixin],
+  emits: ['update-product'],
   methods: {
-    showModal() {
-      this.modal.show();
-    },
-    hideModal() {
-      this.modal.hide();
-    },
     uploadFile() {
       const uploadFile = this.$refs.fileInput.files[0];
       const formData = new FormData();
@@ -185,14 +158,6 @@ export default {
           this.isLoading = false;
           this.tempProduct.imageUrl = res.data.imageUrl;
         }
-      });
-    },
-    delProduct() {
-      // /api/:api_path/admin/product/:product_id
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.product.id}`;
-      this.$http.delete(api, this.product.id).then(() => {
-        this.hideModal();
-        this.$emit('get-product');
       });
     },
   },

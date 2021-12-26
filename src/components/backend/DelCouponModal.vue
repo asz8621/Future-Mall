@@ -8,11 +8,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div>你確定要刪除 <span class="text-danger">{{product.title}}</span>，確認後資料將無法復原。</div>
+        <div>你確定要刪除 <span class="text-danger">{{ coupon.title }}</span>，確認後資料將無法復原。</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-outline-danger" @click.prevent="delProduct">確認</button>
+        <button type="button" class="btn btn-outline-danger" @click.prevent="delCoupon">確認</button>
       </div>
     </div>
   </div>
@@ -24,23 +24,18 @@ import modalMixin from '@/mixins/modalMixin';
 
 export default {
   props: {
-    product: {
+    coupon: {
       type: Object,
       default() { return {}; },
     },
   },
-  data() {
-    return {
-      tempProduct: {},
-    };
-  },
   mixins: [modalMixin],
   methods: {
-    delProduct() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.product.id}`;
-      this.$http.delete(api, this.product.id).then(() => {
+    delCoupon() {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${this.coupon.id}`;
+      this.$http.delete(api, this.coupon.id).then(() => {
         this.hideModal();
-        this.$emit('get-product');
+        this.$emit('get-coupon');
       });
     },
   },

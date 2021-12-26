@@ -41,21 +41,21 @@
     </tbody>
   </table>
   <Pagination :pages="pagination" @change-pages="getProducts"></Pagination>
-  <ProductModal ref="productModal" :product="tempProduct"
+  <ProductModal ref="productModal" :product="tempProduct" :modalState="modalState"
     @update-product="updateProduct"></ProductModal>
-  <DelModal ref="delModal" :product="tempProduct"
-    @get-product="getProducts"></DelModal>
+  <DelProductModal ref="delProductModal" :product="tempProduct"
+    @get-product="getProducts"></DelProductModal>
 </template>
 
 <script>
-import ProductModal from '../components/ProductModal.vue';
-import DelModal from '../components/DelModal.vue';
-import Pagination from '../components/Pagination.vue';
+import ProductModal from '@/components/backend/ProductModal.vue';
+import DelProductModal from '@/components/backend/DelProductModal.vue';
+import Pagination from '@/components/Pagination.vue';
 
 export default {
   components: {
     ProductModal,
-    DelModal,
+    DelProductModal,
     Pagination,
   },
   data() {
@@ -130,7 +130,7 @@ export default {
           break;
         case 'del':
           this.tempProduct = { ...item };
-          productComponent = this.$refs.delModal;
+          productComponent = this.$refs.delProductModal;
           productComponent.showModal();
           break;
         default:

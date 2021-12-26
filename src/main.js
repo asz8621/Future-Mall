@@ -19,7 +19,7 @@ import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
 import App from './App.vue';
 import router from './router';
 
-import { currency } from './methods/fifters';
+import { currency, date } from './methods/fifters';
 
 // validate
 defineRule('required', required);
@@ -35,6 +35,7 @@ const app = createApp(App).use(router);
 
 app.config.globalProperties.$filters = {
   currency,
+  date,
 };
 
 app.use(VueAxios, axios);

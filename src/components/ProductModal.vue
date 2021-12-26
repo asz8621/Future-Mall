@@ -1,12 +1,11 @@
 <template>
-<Loading :active="isLoading"></Loading>
-<div class="modal fade" id="productModal" tabindex="-1"
-  aria-labelledby="productModalLabel" aria-hidden="true" ref="productModal">
+<div class="modal fade" id="compoundModal" tabindex="-1"
+  aria-labelledby="compoundModalLabel" aria-hidden="true" ref="compoundModal">
   <div class="modal-dialog modal-xl ">
     <div class="modal-content border-0">
       <div class="modal-header bg-dark text-white">
-        <h5 class="modal-title" id="productModalLabel" v-if="modalState === 'add'">新增產品</h5>
-        <h5 class="modal-title" id="productModalLabel" v-else>編輯產品</h5>
+        <h5 class="modal-title" id="compoundModalLabel" v-if="modalState === 'add'">新增產品</h5>
+        <h5 class="modal-title" id="compoundModalLabel" v-else>編輯產品</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">

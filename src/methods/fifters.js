@@ -4,6 +4,6 @@ export function currency(num) {
 }
 
 export function date(time) {
-  const localDate = new Date(time * 1000);
-  return localDate.toLocaleDateString();
+  const newDate = new Date(time);
+  return `${newDate.getFullYear()}/${newDate.getMonth() + 1}/${newDate.getDate()} ${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`;
 }
