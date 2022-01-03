@@ -14,7 +14,7 @@
             <div class="mb-3">
               <label for="image" class="form-label">輸入圖片網址</label>
               <input type="text" class="form-control" id="image"
-                      placeholder="請輸入圖片連結" v-model="tempProduct.imageUrl">
+               placeholder="請輸入圖片連結" v-model="tempProduct.imageUrl">
             </div>
             <div class="mb-3">
               <label for="customFile" class="form-label">或 上傳圖片
@@ -53,17 +53,13 @@
                 placeholder="請輸入標題" v-model="tempProduct.title">
             </div>
 
-            <div class="row gx-2">
-              <div class="mb-3 col-md-6">
-                <label for="category" class="form-label">分類</label>
-                <input type="text" class="form-control" id="category"
-                  laceholder="請輸入分類" v-model="tempProduct.category">
-              </div>
-              <div class="mb-3 col-md-6">
-                <label for="price" class="form-label">單位</label>
-                <input type="text" class="form-control" id="unit"
-                        placeholder="請輸入單位" v-model="tempProduct.unit">
-              </div>
+            <div class="mb-3">
+              <label for="category" class="form-label">分類</label>
+              <select name="category" id="category" class="form-select"
+                v-model="tempProduct.category">
+                <option value="" disabled selected>請選擇</option>
+                <option v-for="item in categorys" :key="item" :value="item">{{item}}</option>
+              </select>
             </div>
 
             <div class="row gx-2">
@@ -87,10 +83,20 @@
             </div>
             <div class="mb-3">
               <label for="content" class="form-label">說明內容</label>
-              <textarea type="text" class="form-control" id="content"
-                        placeholder="請輸入產品說明內容" v-model="tempProduct.content"></textarea>
+               <editor api-key="b5qc97z7gcmnao2l5uuwcmuvimzvgu7bfeb2173dg9evhjdh"
+               v-model="tempProduct.content" :init="init"></editor>
             </div>
-            <div class="mb-3">
+            <div class="d-flex mb-3">
+              <div class="form-check me-5">
+                <input class="form-check-input" type="checkbox"
+                        :true-value="'1'"
+                        :false-value="'0'"
+                        v-model="tempProduct.unit"
+                        id="unit">
+                <label class="form-check-label" for="unit">
+                  熱門商品
+                </label>
+              </div>
               <div class="form-check">
                 <input class="form-check-input" type="checkbox"
                         :true-value="1"
@@ -98,7 +104,7 @@
                         v-model="tempProduct.is_enabled"
                         id="is_enabled">
                 <label class="form-check-label" for="is_enabled">
-                  是否啟用
+                  啟用
                 </label>
               </div>
             </div>
@@ -107,10 +113,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary"
-                data-bs-dismiss="modal" :disabled="isLoading">取消
-        </button>
+         data-bs-dismiss="modal" :disabled="isLoading">取消</button>
         <button type="button" class="btn btn-primary"
-        @click="$emit('update-product', tempProduct)" :disabled="isLoading">確認</button>
+         @click="$emit('update-product', tempProduct)" :disabled="isLoading">確認</button>
       </div>
     </div>
 
@@ -119,6 +124,7 @@
 </template>
 
 <script>
+import editor from '@tinymce/tinymce-vue';
 import modalMixin from '@/mixins/modalMixin';
 
 export default {
@@ -131,10 +137,27 @@ export default {
       type: String,
     },
   },
+  components: {
+    editor,
+  },
   data() {
     return {
+      categorys: ['想念', '知識', '預知', '便利', '其它'],
       tempProduct: {},
       isLoading: false,
+      init: {
+        selector: 'textarea',
+        height: 300,
+        plugins: 'preview code fullscreen image media codesample charmap imagetools help charmap emoticons',
+        menubar: false,
+        skin: 'oxide',
+        content_css: false,
+        toolbar: [
+          'undo redo | code fullscreen  preview | formatselect',
+          'fontselect fontsizeselect forecolor backcolor removeformat | bold italic underline strikethrough charmap emoticons',
+          'alignleft aligncenter alignright alignjustify outdent indent numlist bullist | image media',
+        ],
+      },
     };
   },
   watch: {
@@ -151,9 +174,7 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`;
       formData.append('file-to-upload', uploadFile);
       this.isLoading = true;
-
       this.$http.post(api, formData).then((res) => {
-        console.log(res.data);
         if (res.data.success) {
           this.isLoading = false;
           this.tempProduct.imageUrl = res.data.imageUrl;

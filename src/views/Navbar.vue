@@ -1,7 +1,9 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top p-0 mb-3">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar scroll</a>
+      <a class="navbar-brand" href="#">
+        <img src="../assets/logo.png" alt="" class="img-fluid" width="100">
+      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
         data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false"
         aria-label="Toggle navigation">
@@ -17,7 +19,7 @@
             <router-link to="/about" class="nav-link">關於我們</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/about" class="nav-link">聯絡我們</router-link>
+            <router-link to="/about" class="nav-link">購物車</router-link>
           </li>
         </ul>
       </div>

@@ -6,25 +6,31 @@
   </div>
   <table class="table mt-4">
     <thead>
-      <tr>
-        <th width="120">分類</th>
+      <tr align="center">
+        <th width="150">分類</th>
+        <th width="200">圖片</th>
         <th>產品名稱</th>
         <th width="120">原價</th>
         <th width="120">售價</th>
+        <th width="100">是否熱門</th>
         <th width="100">是否啟用</th>
-        <th width="200">編輯</th>
+        <th width="200">操作</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="item in products" :key="item.id">
+      <tr v-for="item in products" :key="item.id" align="center" class="align-middle">
         <td>{{item.category}}</td>
-        <td>{{item.title}}</td>
-        <td class="text-right">
-          {{ $filters.currency(item.price) }}
+        <td>
+          <img :src="item.imageUrl" alt="" width="150">
         </td>
+        <td>{{item.title}}</td>
         <td class="text-right">
           {{ $filters.currency(item.origin_price) }}
         </td>
+        <td class="text-right">
+          {{ $filters.currency(item.price) }}
+        </td>
+        <td>{{item.unit === '1' ? '熱門' : '' }}</td>
         <td>
           <span class="text-success" v-if="item.is_enabled === 1">啟用</span>
           <span class="text-muted" v-else>不啟用</span>
@@ -80,7 +86,6 @@ export default {
           this.products = res.data.products;
           this.pagination = res.data.pagination;
           this.isLoading = false;
-          console.log(this.pagination);
         }
       });
     },
@@ -112,7 +117,7 @@ export default {
         }
 
         productComponent.hideModal();
-        this.getProducts();
+        this.getProducts(this.pagination.current_page);
         this.tempProduct = {};
       });
     },

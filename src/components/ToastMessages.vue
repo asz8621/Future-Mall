@@ -1,6 +1,6 @@
 <template>
-  <div class="toast-container position-absolute p-3 bottom-0 end-0"
-  id="toastPlacement" data-original-class="toast-container position-absolute p-3">
+  <div class="maxZindex toast-container position-fixed p-3 bottom-0 end-0"
+  id="toastPlacement" data-original-class="toast-container position-fixed p-3">
     <Toast v-for="(msg, key) in messages" :key="key" :msg="msg"></Toast>
   </div>
 </template>
@@ -26,3 +26,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.maxZindex{
+  z-index: 9999;
+}
+</style>

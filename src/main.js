@@ -16,6 +16,7 @@ import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 import Loading from 'vue3-loading-overlay';
 import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
 
+// vue 預設
 import App from './App.vue';
 import router from './router';
 
