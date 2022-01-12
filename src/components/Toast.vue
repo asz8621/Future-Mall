@@ -1,11 +1,13 @@
 <template>
-  <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" ref="toast">
-    <div class="toast-header text-white" :class="`bg-${msg.style}`">
-      <strong class="me-auto">{{msg.title}}</strong>
-      <button type="button" class="btn-close btn-close-white"
-        data-bs-dismiss="toast" aria-label="Close"></button>
+  <div class="toast align-items-center text-white border-0" :class="`bg-${msg.style}`"
+  role="alert" aria-live="assertive" aria-atomic="true" ref="toast">
+    <div class="d-flex">
+      <div class="toast-body">
+        {{msg.title}}
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto"
+      data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
-    <div class="toast-body">{{msg.content}}</div>
   </div>
 </template>
 
@@ -24,3 +26,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+  .toast{
+    width: 200px;
+  }
+</style>

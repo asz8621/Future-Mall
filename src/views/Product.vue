@@ -1,22 +1,47 @@
 <template>
   <Loading :active="isLoading"></Loading>
-  <div class="product p-5">
-    <div class="row align-items-center h-100">
-      <div class="col-12 col-md-6">
-        <img :src="product.imageUrl" alt="" class="img-fluid">
-        <div class="operate mb-5">
-          <button type="button" class="operateBtn btn btn-dark">-</button>
-          <input type="number" class="numInput text-center px-3" min="1" max="99" value="1">
-          <button type="button" class="operateBtn btn btn-dark">+</button>
-        </div>
-        <button type="button" class="w-100 btn btn-dark">加入購物車</button>
-      </div>
+  <div class="product">
+    <div class="row g-0">
       <div class="col-12 col-md-6">
         <div class="position-relative">
-          <h1>{{product.title}}</h1>
-          <small class="position-absolute bottom-0 end-0 text-black-50">{{product.category}}</small>
+          <button type="button"
+           class="preBtn focusNone position-absolute top-50 start-0 translate-middle-y btn"
+           v-if="product.num !== products.length" @click="preProduct(product.num,'pre')">
+            <i class="bi bi-chevron-left"></i>
+           </button>
+          <img :src="product.imageUrl" alt="" class="img-fluid">
+          <button type="button"
+           class="nextBtn focusNone position-absolute top-50 end-0 translate-middle-y btn"
+           v-if="product.num !== 1" @click="preProduct(product.num,'next')">
+            <i class="bi bi-chevron-right"></i>
+           </button>
         </div>
-        <div v-html="product.content"></div>
+      </div>
+      <div class="col-12 col-md-6 align-self-center">
+        <div class="p-3">
+
+          <div class="position-relative">
+            <h1>{{product.title}}</h1>
+            <small class="position-absolute bottom-0 end-0 text-black-50">
+              {{product.category}}
+            </small>
+          </div>
+
+          <div class="text-break mb-3" v-html="product.content"></div>
+
+          <div class="operate d-flex mb-3">
+            <button type="button"
+             class="operateBtn focusNone btn btn-secondary rounded-0"
+             @click="calculateNum('-')" :disabled="qty === 1">-</button>
+            <input type="number" class="numInput text-center w-100" min="1" v-model="qty"
+             @change="checkNum">
+            <button type="button"
+             class="operateBtn focusNone btn btn-secondary rounded-0"
+             @click="calculateNum('+')">+</button>
+          </div>
+          <button type="button" class="w-100 btn btn-dark" @click="addCart(product)">加入購物車</button>
+
+        </div>
       </div>
     </div>
   </div>
@@ -28,15 +53,39 @@ export default {
     return {
       id: '',
       product: {},
+      products: [],
       isLoading: false,
+      qty: 1,
     };
   },
+  inject: ['emitter'],
   created() {
+    this.getAllProduct();
     this.getProduct();
+    console.log('999');
   },
   methods: {
-    getProduct() {
-      this.id = this.$route.params.id;
+    getAllProduct() {
+      let data = [];
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
+      this.$http.get(api).then((res) => {
+        if (res.data.success) {
+          data = res.data.products;
+          data.forEach((item) => {
+            this.products.unshift({
+              id: item.id,
+              num: item.num,
+            });
+          });
+        }
+      });
+    },
+    getProduct(id) {
+      if (id) {
+        this.id = id;
+      } else {
+        this.id = this.$route.params.id;
+      }
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${this.id}`;
       this.isLoading = true;
       this.$http.get(api).then((res) => {
@@ -46,23 +95,74 @@ export default {
         }
       });
     },
+    preProduct(num, state) {
+      let newNum = num;
+      if (state === 'next') {
+        newNum -= 2;
+        this.$router.push(`/product/${this.products[newNum].id}`);
+        this.getProduct(this.products[newNum].id);
+      } else {
+        this.$router.push(`/product/${this.products[num].id}`);
+        this.getProduct(this.products[num].id);
+      }
+    },
+    checkNum() {
+      if (this.qty < 1) this.qty = 1;
+    },
+    calculateNum(symbol) {
+      if (symbol === '-') {
+        if (this.qty > 1) {
+          this.qty -= 1;
+        } else {
+          this.qty = 1;
+        }
+      }
+      if (symbol === '+') this.qty += 1;
+    },
+    addCart(item) {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      const cart = {
+        product_id: item.id,
+        qty: this.qty,
+      };
+      this.$http.post(api, { data: cart }).then(() => {
+        this.qty = 1;
+        this.emitter.emit('get-data');
+        this.emitter.emit('push-message', {
+          style: 'success',
+          title: '成功加入購物車',
+        });
+      });
+    },
   },
 };
 </script>
 
 <style lang="scss">
   .product{
-    height: calc(100vh - 150px - 20px);
     border: 1px solid #dbdbdb;
-    /* border-radius: 5px; */
+  }
+  .preBtn{
+    border: 1px solid transparent;
+    transition: .5s;
+    &:hover{
+      border-color: red;
+    }
+  }
+  .nextBtn{
+    border: 1px solid transparent;
+    transition: .5s;
+    &:hover{
+      border-color: red;
+    }
   }
   .operate{
     .operateBtn{
-      width: 10%;
     }
     .numInput{
-      width: 80%;
-      border: 0;
+      border: none;
+      border-top: 1px solid #6c757d;
+      border-bottom: 1px solid #6c757d;
       outline: none;
     }
   }

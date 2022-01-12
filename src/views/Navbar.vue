@@ -10,25 +10,81 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarScroll">
-        <ul class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll"
+        <ul class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll p-3"
          style="--bs-scroll-height: 100px;">
-          <li class="nav-item">
+          <li class="nav-item px-2">
             <router-link to="/products" class="nav-link">產品</router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item px-2">
             <router-link to="/about" class="nav-link">關於我們</router-link>
           </li>
-          <li class="nav-item">
-            <router-link to="/about" class="nav-link">購物車</router-link>
+          <li class="nav-item px-2">
+            <button type="button" class="cartBtn focusNone btn position-relative"
+             @click="openModal">
+              <i class="bi bi-cart3"></i>
+              <span class="cartNum position-absolute asd">
+                {{cart.length}}
+              </span>
+            </button>
           </li>
         </ul>
       </div>
     </div>
   </nav>
+  <CartModal ref="cartModal" :cart="cart" @get-cart="getCart"></CartModal>
+
 </template>
 
 <script>
-export default {
+import CartModal from '@/components/CartModal.vue';
 
+export default {
+  components: {
+    CartModal,
+  },
+  data() {
+    return {
+      cart: [],
+    };
+  },
+  created() {
+    this.getCart();
+    this.emitter.on('get-data', () => {
+      this.getCart();
+    });
+  },
+  inject: ['emitter'],
+  methods: {
+    getCart() {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      this.$http.get(api).then((res) => {
+        if (res.data.success) {
+          this.cart = res.data.data.carts;
+        }
+      });
+    },
+    openModal() {
+      const cardComponent = this.$refs.cartModal;
+      cardComponent.showModal();
+    },
+  },
 };
 </script>
+
+<style lang="scss">
+  .cartNum{
+    top: -8px;
+    right: -12px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 12px;
+    background: #515151;
+    color: #fff;
+    line-height: 20px;
+  }
+  .cartBtn{
+    padding: 0;
+    font-size: 20px;
+  }
+</style>

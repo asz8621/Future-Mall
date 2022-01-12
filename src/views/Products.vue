@@ -1,9 +1,10 @@
 <template>
   <Loading :active="isLoading"></Loading>
   <div class="stickyTopMenu sticky-top bg-white">
-    <ul class="d-flex justify-content-center align-items-center list-unstyled">
-      <li v-for="item in categoryArr" :key="item">
-        <button type="button" class="btn px-3 mx-3"
+    <ul class="d-flex justify-content-center align-items-center list-unstyled py-3">
+      <li class="topItem mx-2" :class="{'active': item === category}"
+       v-for="item in categoryArr" :key="item">
+        <button type="button" class="focusNone btn px-3"
          @click.prevent="changeCategory(item)">{{item}}</button>
       </li>
     </ul>
@@ -11,13 +12,18 @@
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
     <div class="col-12" v-for="item in tempProducts" :key="item.id">
       <div class="card">
-        <img :src="item.imageUrl" class="card-img-top" alt="...">
+        <img :src="item.imageUrl" class="card-img-top" alt="..." role="button"
+         @click.prevent="pushProduct(item.id)">
         <div class="card-body">
-          <h5 class="card-title">{{item.title}}</h5>
-          <p class="card-text">{{item.content}}</p>
+          <h5 class="card-title" role="button"
+           @click.prevent="pushProduct(item.id)">{{item.title}}</h5>
+          <p class="card-text">{{item.description}}</p>
           <div class="d-flex justify-content-center">
-            <button type="button" class="btn btn-dark" @click="pushProduct(item.id)">查看更多</button>
-            <button type="button" class="btn btn-dark">＋</button>
+            <button type="button" class="btn btn-dark"
+             @click.prevent="pushProduct(item.id)">查看更多</button>
+            <button type="button" class="btn btn-dark" @click.prevent="addCart(item.id)">
+              <i class="bi bi-plus-lg"></i>
+            </button>
           </div>
         </div>
       </div>
@@ -35,6 +41,7 @@ export default {
       category: '全部',
     };
   },
+  inject: ['emitter'],
   created() {
     this.getProducts();
   },
@@ -56,6 +63,7 @@ export default {
       this.$router.push(`/product/${id}`);
     },
     changeCategory(type) {
+      this.category = type;
       if (type === '全部') {
         this.tempProducts = [...this.products];
       } else {
@@ -63,7 +71,22 @@ export default {
         this.tempProducts = temp.filter((item) => item.category === type);
       }
     },
+    addCart(id) {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      const cart = {
+        product_id: id,
+        qty: 1,
+      };
+      this.$http.post(api, { data: cart }).then(() => {
+        this.emitter.emit('get-data');
+        this.emitter.emit('push-message', {
+          style: 'success',
+          title: '成功加入購物車',
+        });
+      });
+    },
   },
+
 };
 
 </script>
@@ -71,5 +94,8 @@ export default {
 <style>
   .stickyTopMenu{
     top: 90px
+  }
+  .topItem{
+    border: 1px solid;
   }
 </style>

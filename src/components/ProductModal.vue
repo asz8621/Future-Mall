@@ -153,7 +153,6 @@ export default {
       this.isLoading = true;
 
       this.$http.post(api, formData).then((res) => {
-        console.log(res.data);
         if (res.data.success) {
           this.isLoading = false;
           this.tempProduct.imageUrl = res.data.imageUrl;

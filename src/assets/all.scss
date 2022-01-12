@@ -13,3 +13,7 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+.focusNone:focus{
+  box-shadow: none !important;
+}
