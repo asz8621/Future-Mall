@@ -1,22 +1,24 @@
 <template>
-  <Navbar></Navbar>
-  <div class="container">
-    <ToastMessages></ToastMessages>
-    <router-view></router-view>
+  <div class="wrapper d-flex flex-column">
+    <Navbar></Navbar>
+    <div :class="$route.path === '/' ? 'container-fluid p-0':'container'">
+      <ToastMessages></ToastMessages>
+      <router-view></router-view>
+    </div>
+    <Footer class="mt-auto"></Footer>
   </div>
-  <!-- <Footer></Footer> -->
 </template>
 
 <script>
 import Navbar from './Navbar.vue';
-// import Footer from './Footer.vue';
+import Footer from './Footer.vue';
 import emitter from '@/methods/emitter';
 import ToastMessages from '@/components/ToastMessages.vue';
 
 export default {
   components: {
     Navbar,
-    // Footer,
+    Footer,
     ToastMessages,
   },
   provide() {
@@ -26,3 +28,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+  .wrapper{
+    min-height: 100vh;
+  }
+</style>

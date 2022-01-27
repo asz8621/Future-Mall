@@ -3,6 +3,10 @@
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/bootstrap";
 
+h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
+  font-weight: 900;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -13,7 +17,15 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
-
+.outlineNone{
+  outline: none;
+}
 .focusNone:focus{
   box-shadow: none !important;
+}
+
+.bg-cover{
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
 }

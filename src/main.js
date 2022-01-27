@@ -19,6 +19,9 @@ import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
 // bootstrap-icons
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
+// VueWriter
+import VueWriter from 'vue-writer';
+
 // vue 預設
 import App from './App.vue';
 import router from './router';
@@ -42,7 +45,11 @@ app.config.globalProperties.$filters = {
   date,
 };
 
+// axios
 app.use(VueAxios, axios);
+
+// VueWriter
+app.use(VueWriter, VueWriter);
 
 // validate
 app.component('Form', Form);

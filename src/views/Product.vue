@@ -33,8 +33,8 @@
             <button type="button"
              class="operateBtn focusNone btn btn-secondary rounded-0"
              @click="calculateNum('-')" :disabled="qty === 1">-</button>
-            <input type="number" class="numInput text-center w-100" min="1" v-model="qty"
-             @change="checkNum">
+            <input type="number" class="numInput outlineNone text-center w-100" min="1"
+             v-model="qty" @change="checkNum">
             <button type="button"
              class="operateBtn focusNone btn btn-secondary rounded-0"
              @click="calculateNum('+')">+</button>
@@ -138,22 +138,23 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .product{
     border: 1px solid #dbdbdb;
+    margin-top: 100px;
   }
   .preBtn{
     border: 1px solid transparent;
     transition: .5s;
     &:hover{
-      border-color: red;
+      border-color: var(--bs-persimmon);
     }
   }
   .nextBtn{
     border: 1px solid transparent;
     transition: .5s;
     &:hover{
-      border-color: red;
+      border-color: var(--bs-persimmon);
     }
   }
   .operate{
@@ -163,7 +164,6 @@ export default {
       border: none;
       border-top: 1px solid #6c757d;
       border-bottom: 1px solid #6c757d;
-      outline: none;
     }
   }
 </style>

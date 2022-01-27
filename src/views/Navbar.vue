@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top p-0 mb-3">
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top p-0" :class="{'bg-white': bgWhite}">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
         <img src="../assets/logo.png" alt="" class="img-fluid" width="100">
@@ -19,10 +19,10 @@
             <router-link to="/about" class="nav-link">關於我們</router-link>
           </li>
           <li class="nav-item px-2">
-            <button type="button" class="cartBtn focusNone btn position-relative"
+            <button type="button" class="cartBtn focusNone btn position-relative p-0"
              @click="openModal">
               <i class="bi bi-cart3"></i>
-              <span class="cartNum position-absolute asd">
+              <span class="cartNum position-absolute">
                 {{cart.length}}
               </span>
             </button>
@@ -45,9 +45,11 @@ export default {
   data() {
     return {
       cart: [],
+      bgWhite: false,
     };
   },
   created() {
+    window.addEventListener('scroll', this.handleScroll);
     this.getCart();
     this.emitter.on('get-data', () => {
       this.getCart();
@@ -55,6 +57,14 @@ export default {
   },
   inject: ['emitter'],
   methods: {
+    handleScroll() {
+      const height = document.documentElement.scrollTop;
+      if (height > 0) {
+        this.bgWhite = true;
+      } else {
+        this.bgWhite = false;
+      }
+    },
     getCart() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.$http.get(api).then((res) => {
@@ -71,20 +81,23 @@ export default {
 };
 </script>
 
-<style lang="scss">
-  .cartNum{
-    top: -8px;
-    right: -12px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    font-size: 12px;
-    background: #515151;
-    color: #fff;
-    line-height: 20px;
-  }
-  .cartBtn{
-    padding: 0;
-    font-size: 20px;
-  }
+<style lang="scss" scoped>
+.navbar{
+  background: rgba(255, 255, 255, 0.75);
+  transition: all .5s;
+}
+.cartNum{
+  top: -8px;
+  right: -12px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 12px;
+  background: #515151;
+  color: #fff;
+  line-height: 20px;
+}
+.cartBtn{
+  font-size: 20px;
+}
 </style>
