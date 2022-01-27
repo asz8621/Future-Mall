@@ -5,11 +5,16 @@
         <router-link :to="`/product/${item.id}`">
           <img :src="item.imageUrl" alt="" class="bestsellersImg">
         </router-link>
-        <div class="p-3 w-100">
-          <h4 class="fs-6 text-muted">{{item.title}}</h4>
-          <p class="bestsellersPrice fs-4 text-black">{{$filters.currency(item.price)}}</p>
+        <div class="d-flex flex-column w-100">
+          <div class="d-flex flex-column aa p-3 h-100">
+            <h4 class="fs-6">{{item.title}}</h4>
+            <p class="bestsellersDesc text-secondary fs-6 m-0">{{item.description}}</p>
+            <p class="bestsellersPrice fs-4 text-persimmon text-end mt-auto mb-0">
+              {{$filters.currency(item.price)}}
+            </p>
+          </div>
           <button type="button" class="bestsellersAddBtn text-white bg-persimmon
-           border border-persimmon position-absolute bottom-0 end-0"
+           border border-persimmon w-50 ms-auto"
            @click.prevent="addCart(item.id)">
             <i class="bi bi-cart-plus me-1"></i> Add Cart
           </button>
@@ -21,7 +26,7 @@
 </template>
 
 <script>
-
+// description
 import { Swiper, SwiperSlide } from 'swiper/vue/swiper-vue';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
 import 'swiper/swiper.min.css';
@@ -198,6 +203,9 @@ export default {
     &:hover{
       opacity: 1;
     }
+  }
+  .bestsellersDesc{
+    @include multiLine(50px, 2);
   }
   @media screen and (max-width:1600px) {
     .bestsellersImg{

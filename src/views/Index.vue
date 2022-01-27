@@ -39,14 +39,14 @@
       </div>
     </div>
 
-    <div class="introduce text-white introduceBorderTop border-top border-white
+    <div class="introduce introduceBorderTop border-top border-white
      d-flex align-items-center pb-5 pb-md-0">
       <div class="introduceBlock p-3 p-lg-4">
           <Popular :popular="popular"></Popular>
       </div>
       <div class="introduceTitle">
         <div class="diagonalContainer diagonalReverse">
-          <h3 class="introduceTitleText text-center p-2 m-0">
+          <h3 class="introduceTitleText text-center text-white p-2 m-0">
             <span class="fs-2">Bestsellers</span>
             <br>
             <span class="fs-4">暢銷商品</span>

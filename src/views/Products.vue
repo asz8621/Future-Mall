@@ -18,22 +18,22 @@
           <div class="card-body mb-5">
             <h5 class="cardTitle" role="button"
             @click.prevent="pushProduct(item.id)">{{item.title}}</h5>
-            <p class="cardText">{{item.description}}</p>
-            <p class="d-flex justify-content-between" v-if="item.origin_price !== item.price">
-              <span>{{$filters.currency(item.origin_price)}}</span>
-              <span>{{$filters.currency(item.price)}}</span>
+            <p class="cardText text-secondary">{{item.description}}</p>
+            <p class="d-flex justify-content-between m-0" v-if="item.origin_price !== item.price">
+              <span class="text-decoration-line-through text-secondary">
+                {{$filters.currency(item.origin_price)}}
+              </span>
+              <span class="text-persimmon fw-bold">{{$filters.currency(item.price)}}</span>
             </p>
-            <p class="text-end" v-else>
+            <p class="text-end m-0" v-else>
               <span>{{$filters.currency(item.price)}}</span>
             </p>
             <div class="text-center">
-              <button type="button" class="btn position-absolute bottom-0 end-0 w-100"
+              <button type="button" class="btn text-white bg-persimmon
+               position-absolute bottom-0 end-0 w-100"
               @click.prevent="addCart(item.id)">
                 <i class="bi bi-cart-plus"></i> Add Cart
               </button>
-              <!-- <button type="button" class="btn btn-dark" @click.prevent="addCart(item.id)">
-                <i class="bi bi-plus-lg"></i>
-              </button> -->
             </div>
           </div>
         </div>
@@ -113,10 +113,6 @@ export default {
   border: 1px solid;
 }
 .cardText{
-  height: 50px;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
+  @include multiLine(50px, 2);
 }
 </style>
