@@ -1,40 +1,49 @@
 <template>
   <Loading :active="isLoading"></Loading>
   <div class="products mb-5">
-    <div class="stickyTopMenu sticky-top bg-white">
-      <ul class="d-flex justify-content-center align-items-center list-unstyled py-3">
+    <div class="stickyTopMenu sticky-top bg-white text-center">
+      <ul class="d-inline-flex justify-content-center align-items-center
+       list-unstyled mt-3 mb-4">
         <li class="topItem mx-2" :class="{'active': item === category}"
         v-for="item in categoryArr" :key="item">
-          <button type="button" class="focusNone btn px-3"
+          <button type="button" class="topItemBtn focusNone btn fw-bold px-3 rounded-0"
+          :class="[item === category ? 'btn-primary' : 'btn-outline-primary']"
           @click.prevent="changeCategory(item)">{{item}}</button>
         </li>
       </ul>
     </div>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
       <div class="col-12" v-for="item in tempProducts" :key="item.id">
-        <div class="card">
-          <img :src="item.imageUrl" class="card-img-top" alt="..." role="button"
-          @click.prevent="pushProduct(item.id)">
-          <div class="card-body mb-5">
+        <div class="card rounded-0 rounded-top">
+          <div class="cardImg" role="button">
+            <img :src="item.imageUrl" class="card-img-top" :alt="item.title"
+             @click.prevent="pushProduct(item.id)">
+          </div>
+          <div class="card-body">
             <h5 class="cardTitle" role="button"
             @click.prevent="pushProduct(item.id)">{{item.title}}</h5>
             <p class="cardText text-secondary">{{item.description}}</p>
-            <p class="d-flex justify-content-between m-0" v-if="item.origin_price !== item.price">
-              <span class="text-decoration-line-through text-secondary">
+            <div class="d-flex justify-content-between" v-if="item.origin_price !== item.price">
+              <p class="text-decoration-line-through text-secondary fst-italic m-0">
                 {{$filters.currency(item.origin_price)}}
-              </span>
-              <span class="text-persimmon fw-bold">{{$filters.currency(item.price)}}</span>
-            </p>
-            <p class="text-end m-0" v-else>
-              <span>{{$filters.currency(item.price)}}</span>
-            </p>
-            <div class="text-center">
-              <button type="button" class="btn text-white bg-persimmon
-               position-absolute bottom-0 end-0 w-100"
-              @click.prevent="addCart(item.id)">
-                <i class="bi bi-cart-plus"></i> Add Cart
-              </button>
+              </p>
+              <p class="text-persimmon fst-italic fw-bold m-0">{{$filters.currency(item.price)}}</p>
             </div>
+            <div class="text-persimmon text-end" v-else>
+              <p class="fw-bold fst-italic m-0">{{$filters.currency(item.price)}}</p>
+            </div>
+          </div>
+          <div class="card-footer border-top-0 p-0">
+            <button type="button" class="btn btn-persimmon text-white fw-bold focusNone
+             w-100 rounded-0"
+            @click.prevent="addCart(item.id)">
+              <span v-if="btnLoading !== item.id">
+                <i class="bi bi-cart-plus"></i> Add Cart
+              </span>
+              <div class="spinner-border spinner-border-sm" role="status" v-else>
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </button>
           </div>
         </div>
       </div>
@@ -48,6 +57,7 @@ export default {
       products: [],
       tempProducts: [],
       isLoading: false,
+      btnLoading: '',
       categoryArr: ['全部', '想念', '知識', '預知', '便利', '其它'],
       category: '全部',
     };
@@ -83,12 +93,14 @@ export default {
       }
     },
     addCart(id) {
+      this.btnLoading = id;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       const cart = {
         product_id: id,
         qty: 1,
       };
       this.$http.post(api, { data: cart }).then(() => {
+        this.btnLoading = '';
         this.emitter.emit('get-data');
         this.emitter.emit('push-message', {
           style: 'success',
@@ -99,7 +111,6 @@ export default {
   },
 
 };
-
 </script>
 
 <style lang="scss" scoped>
@@ -107,12 +118,32 @@ export default {
   margin-top: 120px;
 }
 .stickyTopMenu{
-  top: 90px
-}
-.topItem{
-  border: 1px solid;
+  top: 90px;
+  @include media-576() {
+    overflow-x: auto;
+  }
 }
 .cardText{
   @include multiLine(50px, 2);
+}
+.card{
+  transition: .5s;
+  .cardImg{
+    overflow: hidden;
+    .card-img-top{
+      transition: .5s;
+    }
+  }
+  &:hover{
+    box-shadow: 4px 4px 12px 0px #979797;
+    .cardImg{
+      .card-img-top{
+        transform: scale(1.1);
+      }
+    }
+  }
+}
+.topItemBtn{
+  white-space:nowrap
 }
 </style>
