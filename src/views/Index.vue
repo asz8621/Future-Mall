@@ -8,9 +8,9 @@
            :delay="3000" :start="1000" />
         </div>
         <div class="carouselBtn fs-1 text-white" @click="scrollDown" role="button">
-          <i class="bi bi-chevron-down"></i>
-          <i class="bi bi-chevron-down"></i>
-          <i class="bi bi-chevron-down"></i>
+          <i class="chevronDown bi bi-chevron-down"></i>
+          <i class="chevronDown bi bi-chevron-down"></i>
+          <i class="chevronDown bi bi-chevron-down"></i>
         </div>
       </div>
     </div>
@@ -39,7 +39,7 @@
       </div>
     </div>
 
-    <div class="introduce introduceBorderTop border-top border-white
+    <div class="introduce introduceBorderTop border-top border-white border-2
      d-flex align-items-center pb-5 pb-md-0">
       <div class="introduceBlock p-3 p-lg-4">
           <Popular :popular="popular"></Popular>
@@ -178,67 +178,38 @@ export default {
   background: rgba(255, 255, 255, .6);
   padding: 1rem;
   transition: .5s;
+  @include media-768() {
+    width: 340px;
+  }
+  @include media-576() {
+    width: 320px;
+  }
+  @include media-414() {
+    width: 95%;
+    padding: 1rem 0.5rem;
+  }
 }
 .carouselBtn{
   position: absolute;
   bottom: 4%;
   left: 50%;
   transform: translate(-50%, 0%);
-  i:nth-child(1){
-    position: absolute;
-    bottom: 40%;
+  .chevronDown{
     animation: down 1.5s infinite;
     font-size: 3rem;
     opacity: 0;
+  }
+  i:nth-child(1){
+    position: absolute;
+    bottom: 40%;
   }
   i:nth-child(2){
     position: absolute;
     bottom: 20%;
-    animation: down 1.5s infinite;
     animation-delay: .2s;
-    font-size: 3rem;
-    opacity: 0;
-
   }
   i:nth-child(3){
-    animation: down 1.5s infinite;
     animation-delay: .4s;
-    font-size: 3rem;
-    opacity: 0;
-  }
-}
-
-// 打字機
-.is-typed {
-  display: inline-block;
-  margin-right: 0.5rem;
-}
-
-.is-typed span.typed {
-  color: black;
-}
-
-.is-typed span.cursor {
-  display: inline-block;
-  width: 2px;
-  background-color: black;
-  animation: blink 0.5s infinite;
-  margin-left: 5px;
-}
-
-.is-typed span.cursor.typing {
-  animation: none;
-}
-
-@keyframes blink {
-  49% {
-    background-color: black;
-  }
-  50% {
-    background-color: transparent;
-  }
-  99% {
-    background-color: transparent;
   }
 }
 @keyframes down {
@@ -250,15 +221,79 @@ export default {
   }
 }
 
+// 打字機
+.is-typed {
+  display: inline-block;
+  margin-right: 0.5rem;
+  :deep(.typed) {
+    color: black;
+  }
+  :deep(.cursor) {
+    display: inline-block;
+    width: 2px;
+    background-color: black;
+    animation: blink 1s infinite;
+    margin-left: 5px;
+  }
+  :deep(.cursor.typing) {
+    animation: none;
+  }
+}
+@keyframes blink {
+  49% {
+    background-color: black;
+  }
+  50% {
+    background-color: transparent;
+  }
+  99% {
+    background-color: transparent;
+  }
+}
+
 // introduce
 .introduce{
   background: #080807;
+  @include media-768() {
+    flex-direction: column-reverse;
+  }
 }
 .introduceBlock{
   width: 80%;
+  @include media-1400() {
+    width: 75%;
+  }
+  @include media-1200() {
+    width: 70%;
+  }
+  @include media-1024() {
+    width: 60%;
+  }
+  @include media-992() {
+    width: 65%;
+  }
+  @include media-768() {
+    width: 100%;
+  }
 }
 .introduceTitle{
   width: 20%;
+  @include media-1400() {
+    width: 25%;
+  }
+  @include media-1200() {
+    width: 30%;
+  }
+  @include media-1024() {
+    width: 40%;
+  }
+  @include media-992() {
+    width: 35%;
+  }
+  @include media-768() {
+    width: 100%;
+    margin: 2rem 0;
+  }
 }
 .introduceTitleText{
   position: absolute;
@@ -269,6 +304,11 @@ export default {
   background: #080807;
   z-index: 999;
   transition: .5s;
+  @include media-768() {
+    position: static;
+    transform: translate(0, 0);
+    background: transparent;
+  }
 }
 .diagonalContainer {
   height: 0;
@@ -277,13 +317,30 @@ export default {
   overflow: hidden;
   &::before{
     content: '';
-    border-top: 1px solid #fff;
+    border-top: 2px solid #fff;
     position: absolute;
-    top: 0;
+    top: -1px;
     left: 0;
     right: -50%;
     transform: rotate(45deg);
     transform-origin: 0 0;
+  }
+  @include media-768() {
+    height: auto;
+    padding: 0;
+    &::before{
+      display: none;
+    }
+    &::after{
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 2px;
+      width: 100px;
+      background: var(--bs-persimmon);
+    }
   }
 }
 .diagonal{
@@ -305,9 +362,15 @@ export default {
   background-image: url('../assets/index.png');
   background-attachment: fixed;
   translate: .5s;
+  @include media-768() {
+    background-position: left 10% center;
+  }
 }
 .subscriptionBlock{
   font-size: calc(1.375rem + 1.5vw);
+  @include media-414() {
+    font-size: calc(1.275rem + 0.3vw);
+  }
 }
 .subscriptionInput{
   letter-spacing: 3px;
@@ -315,114 +378,23 @@ export default {
   &::placeholder{
     letter-spacing: 0px;
   }
+  @include media-768() {
+    width: 75%;
+  }
+  @include media-414() {
+    letter-spacing: 2px;
+  }
 }
 .subscriptionBtn{
   width: 15%;
+  @include media-768() {
+    width: 25%;
+  }
 }
 .errorText{
   position: absolute;
   bottom: -60%;
   left: 0;
   font-size: 1rem;
-}
-
-@media screen and (max-width:1400px) {
-  .introduceBlock{
-    width: 75%;
-  }
-  .introduceTitle{
-    width: 25%;
-  }
-}
-@media screen and (max-width:1200px) {
-  .introduceBlock{
-    width: 70%;
-  }
-  .introduceTitle{
-    width: 30%;
-  }
-}
-@media screen and (max-width:1024px) {
-  .introduceBlock{
-    width: 60%;
-  }
-  .introduceTitle{
-    width: 40%;
-  }
-}
-@media screen and (max-width:992) {
-  .introduceBlock{
-    width: 70%;
-  }
-  .introduceTitle{
-    width: 30%;
-  }
-}
-@media screen and (max-width:768px) {
-  .carouselText{
-    width: 340px;
-  }
-  .introduce{
-    flex-direction: column-reverse;
-  }
-  .introduceTitle{
-    width: 100%;
-    margin: 2rem 0;
-  }
-  .introduceBlock{
-    width: 100%;
-  }
-  .introduceTitleText{
-    position: static;
-    transform: translate(0, 0);
-    background: transparent;
-  }
-  .diagonalContainer{
-    height: auto;
-    padding: 0;
-  }
-  .diagonalContainer{
-    &::before{
-      display: none;
-    }
-  }
-  .diagonalContainer{
-    &::after{
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      height: 2px;
-      width: 100px;
-      background: var(--bs-persimmon);
-    }
-  }
-  .subscription{
-    background-position: left 10% center;
-  }
-  .subscriptionInput{
-    width: 75%;
-  }
-  .subscriptionBtn{
-    width: 25%;
-  }
-}
-@media screen and (max-width:576px){
-  .carouselText{
-    width: 320px;
-  }
-}
-@media screen and (max-width:414px) {
-  .carouselText{
-    width: 95%;
-    padding: 1rem 0.5rem;
-  }
-  .subscriptionBlock{
-    font-size: calc(1.275rem + 0.3vw);
-  }
-  .subscriptionInput{
-    letter-spacing: 2px;
-  }
 }
 </style>

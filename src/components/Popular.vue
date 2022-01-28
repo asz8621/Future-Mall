@@ -1,20 +1,20 @@
 <template>
   <swiper :slidesPerView="1" :slidesPerGroup="1" :breakpoints="rwd" :pagination="pagination">
     <swiper-slide v-for="item in popular" :key="item.id" class="borderEffect">
-      <div class="d-flex border-0 bg-white">
-        <router-link :to="`/product/${item.id}`">
-          <img :src="item.imageUrl" alt="" class="bestsellersImg">
+      <div class="bestsellers d-flex border-0 bg-white">
+        <router-link :to="`/product/${item.id}`" class="w-100">
+          <img :src="item.imageUrl" alt="" class="bestsellersImg img-fluid">
         </router-link>
         <div class="d-flex flex-column w-100">
           <div class="d-flex flex-column aa p-3 h-100">
-            <h4 class="fs-6">{{item.title}}</h4>
-            <p class="bestsellersDesc text-secondary fs-6 m-0">{{item.description}}</p>
-            <p class="bestsellersPrice fs-4 text-persimmon text-end mt-auto mb-0">
+            <h4 class="bestsellersTitle">{{item.title}}</h4>
+            <p class="bestsellersDesc text-secondary fs-6">{{item.description}}</p>
+            <p class="bestsellersPrice text-persimmon text-end fw-bold mt-auto mb-0">
               {{$filters.currency(item.price)}}
             </p>
           </div>
           <button type="button" class="bestsellersAddBtn text-white bg-persimmon
-           border border-persimmon w-50 ms-auto"
+           border border-persimmon fw-bold"
            @click.prevent="addCart(item.id)">
             <i class="bi bi-cart-plus me-1"></i> Add Cart
           </button>
@@ -26,7 +26,6 @@
 </template>
 
 <script>
-// description
 import { Swiper, SwiperSlide } from 'swiper/vue/swiper-vue';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
 import 'swiper/swiper.min.css';
@@ -56,13 +55,21 @@ export default {
         },
       },
       rwd: {
-        1024: {
+        414: {
           slidesPerView: 2,
-          spaceBetween: 15,
+          spaceBetween: 30,
+        },
+        768: {
+          slidesPerView: 1,
+          spaceBetween: 30,
+        },
+        1025: {
+          slidesPerView: 2,
+          spaceBetween: 30,
         },
         1400: {
           slidesPerView: 3,
-          spaceBetween: 30,
+          spaceBetween: 15,
         },
       },
     };
@@ -88,6 +95,14 @@ export default {
 </script>
 
 <style lang="scss">
+  .swiper{
+    @include media-992() {
+      max-width: 85%;
+    }
+    @include media-768() {
+      max-width: 100%;
+    }
+  }
   .swiper-pagination{
     position: static;
     text-align: end;
@@ -189,66 +204,48 @@ export default {
       }
     }
   }
+  .bestsellers{
+    @include media-768() {
+      flex-direction: column;
+    }
+  }
   .bestsellersImg{
-    max-width: 200px;
-    height: auto;
-    transition: .5s;
+    height: 100%;
+    @include media-768() {
+      height: auto;
+    }
   }
   .bestsellersAddBtn{
     font-size: 1rem;
     padding: 0.5rem 0.75rem;
+    margin-left: auto;
     border-radius: 10px 0 0 0;
     opacity: .75;
     transition: .5s;
     &:hover{
       opacity: 1;
     }
+    @include media-768() {
+      width: 100%;
+      margin: 0;
+      border-radius: 0;
+      font-size: 1.25rem;
+    }
+  }
+  .bestsellersTitle{
+    font-size: 1.25rem;
   }
   .bestsellersDesc{
+    margin: 0;
     @include multiLine(50px, 2);
-  }
-  @media screen and (max-width:1600px) {
-    .bestsellersImg{
-      max-width: 150px;
+    @include media-768() {
+      margin-bottom: 1rem;
     }
   }
-  @media screen and (max-width:1400px) {
-    .bestsellersImg{
-      max-width: 200px;
-    }
-  }
-  @media screen and (max-width:1200px) {
-    .bestsellersImg{
-      max-width: 150px;
-    }
-  }
-  @media screen and (max-width:992px) {
-    .bestsellersImg{
-      max-width: 240px;
-    }
-  }
-  @media screen and (max-width:768px) {
-    .bestsellersImg{
-      max-width: 320px;
-    }
-  }
-  @media screen and (max-width:576px) {
-    .bestsellersImg{
-      max-width: 200px;
-    }
-  }
-  @media screen and (max-width:414px) {
-    .bestsellersImg{
-      max-width: 125px;
-      height: 100%;
-    }
-    .bestsellersAddBtn{
-      padding: 0.25rem 0.5rem;
-    }
-  }
-  @media screen and (max-width:360px){
-    .bestsellersPrice{
-      font-size: calc(1.175rem + 0.3vw) !important;
+  .bestsellersPrice{
+    font-size: 1.5rem;
+    @include media-1600() {
+      font-size: 1.25rem;
     }
   }
 </style>

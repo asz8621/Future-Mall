@@ -1,0 +1,61 @@
+$PC-1600: 1600px;
+$PC-1400: 1400px;
+$PC-1200: 1200px;
+$PC-1024: 1024px;
+$Pad-992: 992px;
+$Phone-768: 768px;
+$Phone-576: 576px;
+$Phone-414: 414px;
+$Phone-360: 360px;
+$Phone-320: 320px;
+
+@mixin media-1600() {
+	@media (max-width: $PC-1600) {
+  	@content;
+	}
+}
+@mixin media-1400() {
+	@media (max-width: $PC-1400) {
+  	@content;
+	}
+}
+@mixin media-1200() {
+	@media (max-width: $PC-1200) {
+  	@content;
+	}
+}
+@mixin media-1024() {
+	@media (max-width: $PC-1024) {
+  	@content;
+	}
+}
+@mixin media-992() {
+	@media (max-width: $Pad-992) {
+  	@content;
+	}
+}
+@mixin media-768() {
+	@media (max-width: $Phone-768) {
+  	@content;
+	}
+}
+@mixin media-576() {
+	@media (max-width: $Phone-576) {
+  	@content;
+	}
+}
+@mixin media-414() {
+	@media (max-width: $Phone-414) {
+  	@content;
+	}
+}
+@mixin media-360() {
+	@media (max-width: $Phone-360) {
+  	@content;
+	}
+}
+@mixin media-320() {
+	@media (max-width: $Phone-320) {
+  	@content;
+	}
+}
