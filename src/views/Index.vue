@@ -71,7 +71,7 @@
           </Field>
           <error-message v-if="errors" name="email"
             class="invalid-feedback errorText text-persimmon"></error-message>
-          <button  type="submit" class="subscriptionBtn btn btn-dark rounded-0"
+          <button  type="submit" class="subscriptionBtn btn btn-primary rounded-0"
            :disabled="email === '' || Object.keys(errors).length === 1">訂閱</button>
         </Form>
       </div>

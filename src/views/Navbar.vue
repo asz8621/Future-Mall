@@ -22,7 +22,7 @@
             <button type="button" class="cartBtn focusNone btn position-relative p-0"
              @click="openModal">
               <i class="bi bi-cart3"></i>
-              <span class="cartNum position-absolute">
+              <span class="cartNum btn-primary rounded-circle position-absolute">
                 {{cart.length}}
               </span>
             </button>
@@ -91,10 +91,7 @@ export default {
   right: -12px;
   width: 20px;
   height: 20px;
-  border-radius: 50%;
   font-size: 12px;
-  background: #515151;
-  color: #fff;
   line-height: 20px;
 }
 .cartBtn{

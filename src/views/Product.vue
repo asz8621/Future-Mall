@@ -1,17 +1,19 @@
 <template>
   <Loading :active="isLoading"></Loading>
-  <div class="product">
+  <div class="product border">
     <div class="row g-0">
       <div class="col-12 col-md-6">
         <div class="position-relative">
           <button type="button"
-           class="preBtn focusNone position-absolute top-50 start-0 translate-middle-y btn"
+           class="preBtn btn btn-outline-primary focusNone position-absolute top-50 start-0
+           translate-middle-y border-0 fs-2"
            v-if="product.num !== products.length" @click="preProduct(product.num,'pre')">
             <i class="bi bi-chevron-left"></i>
            </button>
-          <img :src="product.imageUrl" alt="" class="img-fluid">
+          <img :src="product.imageUrl" :alt="product.title" class="img-fluid">
           <button type="button"
-           class="nextBtn focusNone position-absolute top-50 end-0 translate-middle-y btn"
+           class="nextBtn btn btn-outline-primary focusNone position-absolute top-50 end-0
+           translate-middle-y border-0 fs-2"
            v-if="product.num !== 1" @click="preProduct(product.num,'next')">
             <i class="bi bi-chevron-right"></i>
            </button>
@@ -22,24 +24,39 @@
 
           <div class="position-relative">
             <h1>{{product.title}}</h1>
-            <small class="position-absolute bottom-0 end-0 text-black-50">
+            <small class="position-absolute bottom-0 end-0 badge rounded-pill bg-secondary">
               {{product.category}}
             </small>
           </div>
 
-          <div class="text-break mb-3" v-html="product.content"></div>
+          <p class="text-secondary">{{product.description}}</p>
 
-          <div class="operate d-flex mb-3">
-            <button type="button"
-             class="operateBtn focusNone btn btn-secondary rounded-0"
-             @click="calculateNum('-')" :disabled="qty === 1">-</button>
-            <input type="number" class="numInput outlineNone text-center w-100" min="1"
-             v-model="qty" @change="checkNum">
-            <button type="button"
-             class="operateBtn focusNone btn btn-secondary rounded-0"
-             @click="calculateNum('+')">+</button>
+          <div class="operate d-flex justify-content-between align-items-center
+           flex-column flex-lg-row mb-5">
+            <div class="operateNum d-flex mb-3 mb-lg-0">
+              <button type="button"
+               class="focusNone btn btn-secondary rounded-0"
+               @click="calculateNum('-')"
+               :disabled="qty === 1 || btnLoading === product.id">-</button>
+              <input type="number" class="outlineNone border-0 border-top border-bottom
+               border-secondary text-center w-100"
+               min="1" v-model="qty" @change="checkNum" :disabled="btnLoading === product.id">
+              <button type="button"
+               class="focusNone btn btn-secondary rounded-0"
+               @click="calculateNum('+')" :disabled="btnLoading === product.id">+</button>
+            </div>
+            <button type="button" class="operateAddBtn focusNone btn btn-primary"
+             @click="addCart(product)" :disabled="btnLoading === product.id">
+              <span v-if="btnLoading !== product.id">
+                <i class="bi bi-cart-plus"></i> Add Cart
+              </span>
+              <div class="spinner-border spinner-border-sm" role="status" v-else>
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </button>
           </div>
-          <button type="button" class="w-100 btn btn-dark" @click="addCart(product)">加入購物車</button>
+
+          <div class="text-break" v-html="product.content"></div>
 
         </div>
       </div>
@@ -55,6 +72,7 @@ export default {
       product: {},
       products: [],
       isLoading: false,
+      btnLoading: '',
       qty: 1,
     };
   },
@@ -120,12 +138,14 @@ export default {
       if (symbol === '+') this.qty += 1;
     },
     addCart(item) {
+      this.btnLoading = item.id;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       const cart = {
         product_id: item.id,
         qty: this.qty,
       };
       this.$http.post(api, { data: cart }).then(() => {
+        this.btnLoading = '';
         this.qty = 1;
         this.emitter.emit('get-data');
         this.emitter.emit('push-message', {
@@ -140,30 +160,22 @@ export default {
 
 <style lang="scss" scoped>
   .product{
-    border: 1px solid #dbdbdb;
-    margin-top: 100px;
+    margin-top: 120px;
   }
-  .preBtn{
-    border: 1px solid transparent;
+  .preBtn, .nextBtn{
     transition: .5s;
-    &:hover{
-      border-color: var(--bs-persimmon);
-    }
-  }
-  .nextBtn{
-    border: 1px solid transparent;
-    transition: .5s;
-    &:hover{
-      border-color: var(--bs-persimmon);
-    }
   }
   .operate{
-    .operateBtn{
+    .operateNum{
+      @include media-992() {
+        width: 100%;
+      }
     }
-    .numInput{
-      border: none;
-      border-top: 1px solid #6c757d;
-      border-bottom: 1px solid #6c757d;
+    .operateAddBtn{
+      width: 150px;
+      @include media-992() {
+        width: 100%;
+      }
     }
   }
 </style>

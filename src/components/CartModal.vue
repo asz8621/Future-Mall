@@ -57,7 +57,7 @@
         </div>
         <div class="modal-footer">
           <div class="text-danger fw-bold" v-if="cart">總計{{$filters.currency(totalPrice)}}</div>
-          <button type="button" class="btn btn-dark w-100"
+          <button type="button" class="btn btn-primary w-100"
            :disabled="isCardId !== ''">結帳</button>
           <!-- <button type="button" class="btn btn-danger w-100"
           @click="delAllCart">清除購物車</button> -->
