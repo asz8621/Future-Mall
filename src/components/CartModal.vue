@@ -12,48 +12,57 @@
            data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <div class="card position-relative mb-3" v-for="item in cart" :key="item.id">
-            <div class="row g-0">
-              <div class="col-md-4">
-                <img :src="item.product.imageUrl" alt="" class="img-fluid">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body d-flex flex-column justify-content-between py-2 h-100">
-                  <h3 class="fs-7 text-muted text-truncate m-0">{{item.product.title}}</h3>
-                  <div class="fw-bold">{{$filters.currency(item.product.price)}}</div>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex">
-                      <button type="button"
-                       class="operateBtn focusNone btn btn-secondary rounded-0 p-0"
-                       @click="calculateNum(item, '-')" :disabled="item.qty === 1">-</button>
-                      <input type="number" min="1"
-                       class="numInput focusNone text-center form-control rounded-0 fs-7 py-0"
-                       v-model.number="item.qty"
-                       @change="checkNum(item.id, item.product_id, item.qty)">
-                      <button type="button"
-                       class="operateBtn focusNone btn btn-secondary rounded-0 p-0"
-                       @click="calculateNum(item, '+')">+</button>
+          <div v-if="cart.length === 0"
+           class="noCart d-flex justify-content-center align-items-center h-100">
+            <div class="text-center p-3">
+              <div class="mb-3">購物車並無商品，請點選下方按鈕選擇商品</div>
+              <button type="button" class="btn btn-primary" @click="goShopping">前往購物</button>
+            </div>
+          </div>
+          <template v-else>
+            <div class="card position-relative mb-3" v-for="item in cart" :key="item.id">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <img :src="item.product.imageUrl" alt="" class="img-fluid">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body d-flex flex-column justify-content-between py-2 h-100">
+                    <h3 class="fs-7 text-muted text-truncate m-0">{{item.product.title}}</h3>
+                    <div class="fw-bold">{{$filters.currency(item.product.price)}}</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex">
+                        <button type="button"
+                        class="operateBtn focusNone btn btn-secondary rounded-0 p-0"
+                        @click="calculateNum(item, '-')" :disabled="item.qty === 1">-</button>
+                        <input type="number" min="1"
+                        class="numInput focusNone text-center form-control rounded-0 fs-7 py-0"
+                        v-model.number="item.qty"
+                        @change="checkNum(item.id, item.product_id, item.qty)">
+                        <button type="button"
+                        class="operateBtn focusNone btn btn-secondary rounded-0 p-0"
+                        @click="calculateNum(item, '+')">+</button>
+                      </div>
+                      <div class="right border border-secondary">
+                        <button type="button" class="operateBtn focusNone btn text-secondary p-0"
+                        @click="delCart(item.id)"><i class="bi bi-trash"></i></button>
+                      </div>
                     </div>
-                    <div class="right border border-secondary">
-                      <button type="button" class="operateBtn focusNone btn text-secondary p-0"
-                       @click="delCart(item.id)"><i class="bi bi-trash"></i></button>
+                    <div v-if="isMaxNum === item.id">2123</div>
+                    <div class="d-flex justify-content-between">
+                      <span>單品總計</span>
+                      <span class="fw-bold">{{$filters.currency(item.total)}}</span>
                     </div>
-                  </div>
-                  <div v-if="isMaxNum === item.id">2123</div>
-                  <div class="d-flex justify-content-between">
-                    <span>單品總計</span>
-                    <span class="fw-bold">{{$filters.currency(item.total)}}</span>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="cardLoading position-absolute top-0 start-0 w-100 h-100
-             d-flex justify-content-center align-items-center" v-if="isCardId === item.id">
-              <div class="spinner-border text-secondary" role="status">
-                <span class="visually-hidden">Loading...</span>
+              <div class="cardLoading position-absolute top-0 start-0 w-100 h-100
+              d-flex justify-content-center align-items-center" v-if="isCardId === item.id">
+                <div class="spinner-border text-secondary" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
               </div>
             </div>
-          </div>
+          </template>
         </div>
         <div class="modal-footer">
           <div class="text-danger fw-bold" v-if="cart">
@@ -61,7 +70,7 @@
             {{$filters.currency(totalPrice)}}
           </div>
           <button type="button" class="btn btn-primary w-100"
-           :disabled="isCardId !== ''" @click="checkOut">結帳</button>
+           :disabled="isCardId !== '' || cart.length === 0" @click="checkOut">結帳</button>
           <!-- <button type="button" class="btn btn-danger w-100"
           @click="delAllCart">清除購物車</button> -->
         </div>
@@ -139,9 +148,17 @@ export default {
         this.$emit('get-cart');
       });
     },
+    goShopping() {
+      if (this.$route.path === '/products') {
+        this.hideModal();
+      } else {
+        this.$router.push('/products');
+        this.hideModal();
+      }
+    },
     checkOut() {
       this.hideModal();
-      this.$router.push('order');
+      this.$router.push('/order');
     },
   },
 };

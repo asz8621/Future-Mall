@@ -119,17 +119,16 @@
                     @click="calculateNum(item, '-')"
                     :disabled="item.qty === 1 || isEdit === item.id">-</button>
                     <div class="position-relative w-100">
-                      <div class="loading d-flex justify-content-center align-items-center w-100"
-                      v-if="isEdit === item.id && !isDel">
+                      <div v-if="isEdit === item.id && !isDel"
+                       class="loading d-flex justify-content-center align-items-center w-100">
                         <div class="spinner-border spinner-border-sm" role="status">
                           <span class="visually-hidden">Loading...</span>
                         </div>
                       </div>
                       <input v-else type="number" min="1"
-                      class="numInput focusNone text-center form-control rounded-0 fs-7 py-0"
+                      class="numInput focusNone text-center form-control rounded-0 fs-7 p-0"
                       v-model.number="item.qty" :disabled="isEdit === item.id"
                       @change="checkNum(item.id, item.product_id, item.qty)">
-
                     </div>
                     <button type="button"
                     class="operateBtn focusNone btn btn-secondary rounded-0 p-0"
@@ -694,13 +693,13 @@ export default {
       }
     }
     .numContent{
-      padding: 0 25%;
+      width: 250px;
       position: relative;
       @include media-992() {
-        padding: 0 5%;
+        width: 200px;
       }
       @include media-576() {
-        padding: 0;
+        width: auto;
       }
       .operateBtn{
         width: 36px;
