@@ -56,9 +56,12 @@
           </div>
         </div>
         <div class="modal-footer">
-          <div class="text-danger fw-bold" v-if="cart">總計{{$filters.currency(totalPrice)}}</div>
+          <div class="text-danger fw-bold" v-if="cart">
+            <span class="me-1">總計</span>
+            {{$filters.currency(totalPrice)}}
+          </div>
           <button type="button" class="btn btn-primary w-100"
-           :disabled="isCardId !== ''">結帳</button>
+           :disabled="isCardId !== ''" @click="checkOut">結帳</button>
           <!-- <button type="button" class="btn btn-danger w-100"
           @click="delAllCart">清除購物車</button> -->
         </div>
@@ -135,6 +138,10 @@ export default {
       this.$http.delete(api).then(() => {
         this.$emit('get-cart');
       });
+    },
+    checkOut() {
+      this.hideModal();
+      this.$router.push('order');
     },
   },
 };

@@ -8,7 +8,9 @@ import VueAxios from 'vue-axios';
 import {
   Field, Form, ErrorMessage, defineRule, configure,
 } from 'vee-validate';
-import { required, email, min } from '@vee-validate/rules';
+import {
+  required, email, min, numeric,
+} from '@vee-validate/rules';
 import { localize, setLocale } from '@vee-validate/i18n';
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 
@@ -22,6 +24,10 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 // VueWriter
 import VueWriter from 'vue-writer';
 
+// AOS
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 // vue 預設
 import App from './App.vue';
 import router from './router';
@@ -32,6 +38,7 @@ import { currency, date } from './methods/fifters';
 defineRule('required', required);
 defineRule('email', email);
 defineRule('min', min);
+defineRule('numeric', numeric);
 configure({
   generateMessage: localize({ zh_TW: zhTW }),
   validateOnInput: true, // 輸入文字立即驗證
@@ -47,6 +54,9 @@ app.config.globalProperties.$filters = {
 
 // axios
 app.use(VueAxios, axios);
+
+// AOS
+app.use(AOS.init());
 
 // VueWriter
 app.use(VueWriter, VueWriter);

@@ -1,11 +1,11 @@
 <template>
   <div class="wrapper d-flex flex-column">
-    <Navbar></Navbar>
+    <Navbar v-if="$route.path !== '/order'"></Navbar>
     <div :class="$route.path === '/' ? 'container-fluid p-0':'container'">
       <ToastMessages></ToastMessages>
       <router-view></router-view>
     </div>
-    <Footer class="mt-auto"></Footer>
+    <Footer class="mt-auto" v-if="$route.path !== '/order'"></Footer>
   </div>
 </template>
 
