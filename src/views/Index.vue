@@ -1,4 +1,9 @@
 <template>
+  <Loading v-model:active="isLoading" :z-index="9999">
+    <div class="rotationLoading">
+      <img src="../assets/loading.png" alt="loading" class="img-fluid">
+    </div>
+  </Loading>
   <div class="index">
     <div id="carouselExampleCaptions" class="carousel slide vh-100" data-bs-ride="carousel">
       <div class="carousel-inner h-100">
@@ -93,6 +98,7 @@ export default {
       products: [],
       popular: [],
       email: '',
+      isLoading: false,
     };
   },
   inject: ['emitter'],
@@ -136,6 +142,7 @@ export default {
           this.products = res.data.products;
           data = this.products.filter((item) => item.unit === '1');
           this.popular = this.randomPopular(5, data);
+          this.isLoading = false;
         }
       });
     },

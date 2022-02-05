@@ -1,5 +1,9 @@
 <template>
-  <Loading :active="isLoading"></Loading>
+  <Loading v-model:active="isLoading" :z-index="9999">
+    <div class="rotationLoading">
+      <img src="../assets/loading.png" alt="loading" class="img-fluid">
+    </div>
+  </Loading>
   <div class="products mb-5">
     <div class="stickyTopMenu sticky-top bg-white text-center">
       <ul class="d-inline-flex justify-content-center align-items-center

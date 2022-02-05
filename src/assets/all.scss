@@ -29,3 +29,16 @@ input[type=number] {
   background-position: center center;
   background-repeat: no-repeat;
 }
+.rotationLoading{
+  width: 150px;
+  opacity: .8;
+  animation: rotation 3s linear infinite;
+}
+@keyframes rotation{
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

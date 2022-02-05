@@ -1,6 +1,10 @@
 <template>
 
-  <Loading :active="isLoading"></Loading>
+  <Loading v-model:active="isLoading" :z-index="9999">
+    <div class="rotationLoading">
+      <img src="../assets/loading.png" alt="loading" class="img-fluid">
+    </div>
+  </Loading>
 
   <!-- Navbar -->
   <div class="orderNavbar text-center mb-5">
