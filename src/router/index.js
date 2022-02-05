@@ -49,11 +49,10 @@ const routes = [
         component: () => import('../views/backend/Products.vue'),
 
       },
-      // {
-      //   path: 'order',
-      //   component: () => import('../views/backend/Order.vue'),
-
-      // },
+      {
+        path: 'order',
+        component: () => import('../views/backend/Order.vue'),
+      },
       {
         path: 'coupon',
         component: () => import('../views/backend/Coupon.vue'),

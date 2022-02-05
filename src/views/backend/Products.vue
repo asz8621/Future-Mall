@@ -24,10 +24,10 @@
           <img :src="item.imageUrl" alt="" width="150">
         </td>
         <td>{{item.title}}</td>
-        <td class="text-right">
+        <td class="text-end">
           {{ $filters.currency(item.origin_price) }}
         </td>
-        <td class="text-right">
+        <td class="text-end">
           {{ $filters.currency(item.price) }}
         </td>
         <td>{{item.unit === '1' ? '熱門' : '' }}</td>
@@ -49,19 +49,18 @@
   <Pagination :pages="pagination" @change-pages="getProducts"></Pagination>
   <ProductModal ref="productModal" :product="tempProduct" :modalState="modalState"
     @update-product="updateProduct"></ProductModal>
-  <DelProductModal ref="delProductModal" :product="tempProduct"
-    @get-product="getProducts"></DelProductModal>
+  <DelModal ref="delModal" :item="tempProduct" @del-item="delProduct"></DelModal>
 </template>
 
 <script>
 import ProductModal from '@/components/backend/ProductModal.vue';
-import DelProductModal from '@/components/backend/DelProductModal.vue';
-import Pagination from '@/components/Pagination.vue';
+import DelModal from '@/components/backend/DelModal.vue';
+import Pagination from '@/components/backend/Pagination.vue';
 
 export default {
   components: {
     ProductModal,
-    DelProductModal,
+    DelModal,
     Pagination,
   },
   data() {
@@ -135,12 +134,21 @@ export default {
           break;
         case 'del':
           this.tempProduct = { ...item };
-          productComponent = this.$refs.delProductModal;
+          productComponent = this.$refs.delModal;
           productComponent.showModal();
           break;
         default:
           break;
       }
+    },
+    delProduct() {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProduct.id}`;
+      this.isLoading = true;
+      this.$http.delete(url).then(() => {
+        const delComponent = this.$refs.delModal;
+        delComponent.hideModal();
+        this.getProducts();
+      });
     },
   },
 };

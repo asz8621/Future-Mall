@@ -17,7 +17,7 @@
     <tbody>
       <tr v-for="item in coupons" :key="item.id">
         <td>{{item.title}}</td>
-        <td class="text-right">
+        <td class="text-end">
           {{ $filters.currency(item.percent) }}
         </td>
         <td>{{$filters.date(item.due_date)}}</td>
@@ -39,18 +39,18 @@
   <Pagination :pages="pagination" @change-pages="getCoupon"></Pagination>
   <CouponModal ref="couponModal" :coupon="tempCoupon" :modalState="modalState"
    @update-coupon="updateCoupon"></CouponModal>
-  <DelCouponModal ref="delModal" :coupon="tempCoupon" @get-coupon="getCoupon"></DelCouponModal>
+  <DelModal ref="delModal" :item="tempCoupon" @del-item="delProduct"></DelModal>
 </template>
 
 <script>
 import CouponModal from '@/components/backend/CouponModal.vue';
-import DelCouponModal from '@/components/backend/DelCouponModal.vue';
-import Pagination from '@/components/Pagination.vue';
+import DelModal from '@/components/backend/DelModal.vue';
+import Pagination from '@/components/backend/Pagination.vue';
 
 export default {
   components: {
     CouponModal,
-    DelCouponModal,
+    DelModal,
     Pagination,
   },
   data() {
@@ -140,6 +140,15 @@ export default {
     changeDate(time) {
       const date = new Date(time);
       return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}T${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+    },
+    delProduct() {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`;
+      this.isLoading = true;
+      this.$http.delete(url).then(() => {
+        const delComponent = this.$refs.delModal;
+        delComponent.hideModal();
+        this.getCoupon();
+      });
     },
   },
 };
