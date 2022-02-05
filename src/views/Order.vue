@@ -14,6 +14,26 @@
   <!-- fixed-bottom -->
   <div v-if="!isFinish" class="fixed-bottom border-top bg-white py-3 w-100">
     <div class="container">
+
+      <div class="coupon mb-4 ms-auto" v-if="!isWriteData">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="輸入折扣碼"
+           aria-label="Input group" aria-describedby="coupon" v-model="coupon.couponCode"
+           :disabled="coupon.isCoupon || coupon.isClick || cart.length === 0">
+          <button type="button" class="input-group-text btn btn-primary" id="coupon"
+           :disabled="coupon.isCoupon || coupon.isClick || cart.length === 0"
+           @click="confirmCoupon">
+            <div class="spinner-border spinner-border-sm me-2" role="status" v-if="coupon.isClick">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <span>套用優惠劵</span>
+          </button>
+        </div>
+        <span class="fs-7" :class="coupon.isCoupon ? 'text-success' : 'text-persimmon'">
+          {{coupon.message}}
+        </span>
+      </div>
+
       <div class="totalPrice text-end fw-bold d-block d-md-none pb-3">
         <span class="me-1">總計</span>
         <span class="text-persimmon fst-italic">
@@ -25,8 +45,7 @@
          :class="cart.length === 0 ? 'btn-primary' : 'btn-secondary'"
          @click="$router.push('products')" v-if="!isWriteData">返回購物</button>
         <button type="button" class="backBtn btn btn-secondary fw-bold"
-         @click="backList"
-         v-if="isWriteData">查看清單</button>
+         @click="backList" v-if="isWriteData">查看清單</button>
         <div class="totalPrice fw-bold d-none d-md-block">
           <span class="me-1">總計</span>
           <span class="text-persimmon fst-italic">
@@ -331,10 +350,10 @@
 
             <div class="col-12">
               <label for="msgTextarea" class="form-label">留言</label>
-              <Field id="msgTextarea" name="msgTextarea" as="textarea"
-                class="form-control focusNone" :class="{ 'is-invalid': errors['msgTextarea'] }"
+              <textarea id="msgTextarea" name="msgTextarea" as="textarea"
+              class="form-control focusNone" :class="{ 'is-invalid': errors['msgTextarea'] }"
               placeholder="請輸入留言，如使用虛擬幣支付請留下帳號" rows="5" rules="required"
-              v-model.trim="form.message"></Field>
+              v-model.trim="form.message"></textarea>
               <error-message v-if="errors" name="msgTextarea"
               class="invalid-feedback errorText text-persimmon"></error-message>
             </div>
@@ -368,6 +387,12 @@ export default {
       isEdit: '',
       isDel: false,
       isBack: false,
+      coupon: {
+        couponCode: '',
+        message: '',
+        isCoupon: false,
+        isClick: false,
+      },
       TWD: 0,
       total: 0,
       form: {
@@ -475,7 +500,11 @@ export default {
         this.isLoading = false;
         if (res.data.success) {
           this.cart = res.data.data.carts;
-          this.total = res.data.data.final_total;
+          if (this.coupon.isCoupon) {
+            this.total = res.data.data.final_total;
+          } else {
+            this.total = res.data.data.total;
+          }
         }
       });
     },
@@ -542,6 +571,21 @@ export default {
           title: '商品已從清單移除',
         });
         this.getCart(id);
+      });
+    },
+    confirmCoupon() {
+      this.coupon.isClick = true;
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`;
+      const coupon = {
+        code: this.coupon.couponCode,
+      };
+      this.$http.post(api, { data: coupon }).then((res) => {
+        this.coupon.message = res.data.message;
+        this.coupon.isClick = false;
+        if (res.data.success) {
+          this.coupon.isCoupon = true;
+          this.getCart();
+        }
       });
     },
     fillinData() { // 前往寫資料
@@ -632,6 +676,15 @@ export default {
   .backBtn, .nextBtn, .totalPrice{
     font-size: 1.25rem;
   }
+  .coupon{
+    width: 50%;
+    @include media-768() {
+      width: 75%
+    }
+    @include media-576() {
+      width: 100%
+    }
+  }
   // 流程圖
   .line{
     position: absolute;
@@ -686,7 +739,7 @@ export default {
     }
   }
   .cartList{
-    margin-bottom: 120px;
+    margin-bottom: 170px;
     overflow: hidden;
   }
   .cartListItem{
