@@ -28,8 +28,11 @@
           <div class="col-md-6">
             <div class="mb-3">
               <label for="percent" class="form-label">折扣</label>
-              <input type="number" class="form-control" id="percent"
-                laceholder="請輸入折扣" v-model="tempCoupon.percent">
+              <div class="percent d-flex align-items-center">
+                <input type="tel" class="form-control text-center" id="percent" maxlength="2"
+                  laceholder="請輸入折扣" v-model.number="tempCoupon.percent">
+                <span class="fs-3 ms-2">%</span>
+              </div>
             </div>
           </div>
           <div class="col-12">
@@ -98,3 +101,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+  .percent{
+    width: 100px;
+  }
+</style>

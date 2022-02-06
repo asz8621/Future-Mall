@@ -5,5 +5,15 @@ export function currency(num) {
 
 export function date(time) {
   const newDate = new Date(time);
-  return `${newDate.getFullYear()}/${newDate.getMonth() + 1}/${newDate.getDate()} ${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`;
+  let month = newDate.getMonth() + 1;
+  let day = newDate.getDate();
+  let hours = newDate.getHours();
+  let minutes = newDate.getMinutes();
+  let seconds = newDate.getSeconds();
+  if (month < 10) month = `0${month}`;
+  if (day < 10) day = `0${day}`;
+  if (hours < 10) hours = `0${hours}`;
+  if (minutes < 10) minutes = `0${minutes}`;
+  if (seconds < 10) seconds = `0${seconds}`;
+  return `${newDate.getFullYear()}/${month}/${day} ${hours}:${minutes}:${seconds}`;
 }
