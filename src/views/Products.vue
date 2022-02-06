@@ -5,7 +5,7 @@
     </div>
   </Loading>
   <div class="products mb-5">
-    <div class="stickyTopMenu sticky-top bg-white text-center">
+    <div class="stickyTopMenu sticky-top bg-white text-center mb-3">
       <ul class="d-inline-flex justify-content-center align-items-center
        list-unstyled mt-3 mb-4">
         <li class="topItem mx-2" :class="{'active': item === category}"

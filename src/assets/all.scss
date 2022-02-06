@@ -13,6 +13,10 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+input:disabled{
+  cursor: not-allowed;
+}
+
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;

@@ -28,7 +28,7 @@
                 <div class="col-md-8">
                   <div class="card-body d-flex flex-column justify-content-between py-2 h-100">
                     <h3 class="fs-7 text-muted text-truncate m-0">{{item.product.title}}</h3>
-                    <div class="fw-bold">{{$filters.currency(item.product.price)}}</div>
+                    <div class="fw-bold fs-7">{{$filters.currency(item.product.price)}}</div>
                     <div class="d-flex justify-content-between align-items-center">
                       <div class="d-flex">
                         <button type="button"
@@ -50,7 +50,9 @@
                     <div v-if="isMaxNum === item.id">2123</div>
                     <div class="d-flex justify-content-between">
                       <span>單品總計</span>
-                      <span class="fw-bold">{{$filters.currency(item.total)}}</span>
+                      <span class="text-persimmon fst-italic fw-bold">
+                        {{$filters.currency(item.total)}}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -65,9 +67,9 @@
           </template>
         </div>
         <div class="modal-footer">
-          <div class="text-danger fw-bold" v-if="cart">
+          <div class="fw-bold" v-if="cart">
             <span class="me-1">總計</span>
-            {{$filters.currency(totalPrice)}}
+            <span class="text-persimmon fst-italic">{{$filters.currency(totalPrice)}}</span>
           </div>
           <button type="button" class="btn btn-primary w-100"
            :disabled="isCardId !== '' || cart.length === 0" @click="checkOut">結帳</button>

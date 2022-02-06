@@ -35,6 +35,15 @@
 
           <p class="text-secondary">{{product.description}}</p>
 
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <p class="text-decoration-line-through text-secondary fst-italic m-0">
+              {{$filters.currency(product.origin_price)}}
+            </p>
+            <p class="text-persimmon fst-italic fw-bold fs-5 m-0">
+              {{$filters.currency(product.price)}}
+            </p>
+          </div>
+
           <div class="operate d-flex justify-content-between align-items-center
            flex-column flex-lg-row mb-5">
             <div class="operateNum d-flex mb-3 mb-lg-0">
@@ -49,7 +58,8 @@
                class="focusNone btn btn-secondary rounded-0"
                @click="calculateNum('+')" :disabled="btnLoading === product.id">+</button>
             </div>
-            <button type="button" class="operateAddBtn focusNone btn btn-primary"
+            <button type="button"
+             class="operateAddBtn focusNone btn btn-persimmon text-white fw-bold"
              @click="addCart(product)" :disabled="btnLoading === product.id">
               <span v-if="btnLoading !== product.id">
                 <i class="bi bi-cart-plus"></i> Add Cart

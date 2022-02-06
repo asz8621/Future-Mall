@@ -9,7 +9,7 @@
           <div class="d-flex flex-column aa p-3 h-100">
             <h4 class="bestsellersTitle">{{item.title}}</h4>
             <p class="bestsellersDesc text-secondary fs-6">{{item.description}}</p>
-            <p class="bestsellersPrice text-persimmon text-end fw-bold mt-auto mb-0">
+            <p class="bestsellersPrice text-persimmon fst-italic text-end fw-bold mt-auto mb-0">
               {{$filters.currency(item.price)}}
             </p>
           </div>
