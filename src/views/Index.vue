@@ -161,7 +161,7 @@ export default {
 <style lang="scss" scoped>
 // carousel
 .carouselImg{
-  background-image: url('https://images.unsplash.com/photo-1502476698613-931a9afd2488?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1960&q=80'), linear-gradient(0deg,#000,transparent);
+  background-image: url('../assets/carousel.jpg'), linear-gradient(0deg,#000,transparent);
   filter:grayscale(30%);
   &::before{
     content: '';
