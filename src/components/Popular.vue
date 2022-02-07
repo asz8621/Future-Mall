@@ -16,7 +16,12 @@
           <button type="button" class="bestsellersAddBtn text-white bg-persimmon
            border border-persimmon fw-bold"
            @click.prevent="addCart(item.id)">
-            <i class="bi bi-cart-plus me-1"></i> Add Cart
+            <div v-if="isAddcartLoading && addcartId === item.id"
+             class="spinner-border spinner-border-sm me-1" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <i v-else class="bi bi-cart-plus me-1"></i>
+            Add Cart
           </button>
           <div class="inner"></div>
         </div>
@@ -48,6 +53,8 @@ export default {
   inject: ['emitter'],
   data() {
     return {
+      isAddcartLoading: false,
+      addcartId: '',
       pagination: {
         clickable: true,
         renderBullet(index, className) {
@@ -76,12 +83,16 @@ export default {
   },
   methods: {
     addCart(id) {
+      this.isAddcartLoading = true;
+      this.addcartId = id;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       const cart = {
         product_id: id,
         qty: 1,
       };
       this.$http.post(api, { data: cart }).then(() => {
+        this.isAddcartLoading = false;
+        this.addcartId = '';
         this.emitter.emit('get-data');
         this.emitter.emit('push-message', {
           style: 'success',

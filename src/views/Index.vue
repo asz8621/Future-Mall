@@ -72,7 +72,7 @@
           <Field type="email" name="email" class="subscriptionInput outlineNone fs-6 fs-md-5 p-2"
             placeholder="請輸入信箱" autocomplete="off" v-model.trim="email"
             :class="{'is-invalid': errors['email']}"
-            rules="email|required" ref="test1">
+            rules="email|required" ref="emailInput">
           </Field>
           <error-message v-if="errors" name="email"
             class="invalid-feedback errorText text-persimmon"></error-message>
@@ -152,7 +152,7 @@ export default {
         title: '訂閱成功',
       });
       this.email = '';
-      this.$refs.test1.reset();
+      this.$refs.emailInput.reset();
     },
   },
 };
