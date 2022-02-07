@@ -4,7 +4,7 @@
       <img src="../assets/loading.png" alt="loading" class="img-fluid">
     </div>
   </Loading>
-  <div class="product border">
+  <div class="product border mb-5">
     <div class="row g-0">
       <div class="col-12 col-md-6">
         <div class="position-relative">

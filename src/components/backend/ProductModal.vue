@@ -163,6 +163,11 @@ export default {
   watch: {
     product() {
       this.tempProduct = this.product;
+      if (this.modalState === 'add') {
+        this.tempProduct.content = '';
+        this.tempProduct.unit = '0';
+        this.tempProduct.category = '';
+      }
     },
   },
   mixins: [modalMixin],

@@ -2,22 +2,22 @@
   <Loading :active="isLoading"></Loading>
   <table class="table mt-4">
     <thead>
-      <tr>
+      <tr class="text-center">
         <th>姓名</th>
         <th>電話</th>
         <th>信箱</th>
-        <th>金額</th>
+        <th width="150">金額</th>
         <th width="100">是否付款</th>
         <th width="200">編輯</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="item in orders" :key="item.id">
+      <tr v-for="item in orders" :key="item.id" class="text-center">
         <td>{{item.user.name}}</td>
         <td>{{item.user.tel}}</td>
         <td>{{item.user.email}}</td>
-        <td>{{item.total}}</td>
-        <td>
+        <td class="text-end">{{$filters.currency(item.total)}}</td>
+        <td class="text-center">
           <span class="text-success" v-if="item.is_paid">已付款</span>
           <span class="text-muted" v-else>未付款</span>
         </td>

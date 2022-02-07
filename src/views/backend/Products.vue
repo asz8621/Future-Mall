@@ -10,8 +10,8 @@
         <th width="150">分類</th>
         <th width="200">圖片</th>
         <th>產品名稱</th>
-        <th width="120">原價</th>
-        <th width="120">售價</th>
+        <th width="150">原價</th>
+        <th width="150">售價</th>
         <th width="100">是否熱門</th>
         <th width="100">是否啟用</th>
         <th width="200">操作</th>

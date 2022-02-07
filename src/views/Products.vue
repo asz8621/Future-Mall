@@ -27,24 +27,25 @@
             <h5 class="cardTitle" role="button"
             @click.prevent="pushProduct(item.id)">{{item.title}}</h5>
             <p class="cardText text-secondary">{{item.description}}</p>
-            <div class="d-flex justify-content-between" v-if="item.origin_price !== item.price">
-              <p class="text-decoration-line-through text-secondary fst-italic m-0">
+            <div v-if="item.origin_price !== item.price"
+             class="d-flex justify-content-between align-items-center">
+              <p class="originPrice text-decoration-line-through text-secondary fst-italic m-0">
                 {{$filters.currency(item.origin_price)}}
               </p>
               <p class="text-persimmon fst-italic fw-bold m-0">{{$filters.currency(item.price)}}</p>
             </div>
-            <div class="text-persimmon text-end" v-else>
+            <div v-else class="text-persimmon text-end">
               <p class="fw-bold fst-italic m-0">{{$filters.currency(item.price)}}</p>
             </div>
           </div>
           <div class="card-footer border-top-0 p-0">
             <button type="button" class="btn btn-persimmon text-white fw-bold focusNone
              w-100 rounded-0"
-            @click.prevent="addCart(item.id)">
+             @click.prevent="addCart(item.id)">
               <span v-if="btnLoading !== item.id">
                 <i class="bi bi-cart-plus"></i> Add Cart
               </span>
-              <div class="spinner-border spinner-border-sm" role="status" v-else>
+              <div v-else class="spinner-border spinner-border-sm" role="status">
                 <span class="visually-hidden">Loading...</span>
               </div>
             </button>
@@ -79,7 +80,6 @@ export default {
         if (res.data.success) {
           this.products = res.data.products;
           this.tempProducts = res.data.products;
-          this.pagination = res.data.pagination;
           this.isLoading = false;
         }
       });
@@ -149,5 +149,11 @@ export default {
 }
 .topItemBtn{
   white-space:nowrap
+}
+.originPrice{
+  font-size: 14px;
+  @include media-768() {
+    font-size: 12px;
+  }
 }
 </style>

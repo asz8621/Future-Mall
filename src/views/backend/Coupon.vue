@@ -6,8 +6,9 @@
   </div>
   <table class="table mt-4">
     <thead>
-      <tr>
-        <th>優惠券名稱</th>
+      <tr class="text-center">
+        <th width="200">優惠券名稱</th>
+        <th>序號</th>
         <th width="120">折扣</th>
         <th width="200">到期時間</th>
         <th width="100">是否啟用</th>
@@ -15,8 +16,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="item in coupons" :key="item.id">
+      <tr v-for="item in coupons" :key="item.id" class="text-center">
         <td>{{item.title}}</td>
+        <td>{{item.code}}</td>
         <td class="text-end">
           {{ item.percent }} %
         </td>
