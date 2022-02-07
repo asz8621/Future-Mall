@@ -4,19 +4,14 @@
       <a class="navbar-brand" href="#">
         <img src="../assets/logo.png" alt="" class="img-fluid" width="100">
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-        data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false"
-        aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarScroll">
-        <ul class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll p-3"
+      <div class="menu" id="navbarScroll">
+        <ul class="navbar-nav-scroll d-flex list-unstyled ms-auto my-2 my-lg-0 p-3"
          style="--bs-scroll-height: 100px;">
-          <li class="nav-item px-2">
+          <li class="navText nav-item px-2">
             <router-link to="/products" class="nav-link">產品</router-link>
           </li>
-          <li class="nav-item px-2">
-            <router-link to="/about" class="nav-link">關於我們</router-link>
+          <li class="navText nav-item px-2">
+            <router-link to="/getcoupon" class="nav-link">優惠劵</router-link>
           </li>
           <li class="nav-item px-2">
             <button type="button" class="cartBtn focusNone btn position-relative p-0"
@@ -31,6 +26,16 @@
       </div>
     </div>
   </nav>
+  <div class="mobileMenu row g-0 bg-white text-center">
+    <div class="mobileMenuItem col">
+      <router-link to="/products"
+       class="mobileMenuItemLink btn btn-primary focusNone">產品</router-link>
+    </div>
+    <div class="mobileMenuItem col">
+      <router-link to="/getcoupon"
+       class="mobileMenuItemLink btn btn-primary focusNone">優惠劵</router-link>
+    </div>
+  </div>
   <CartModal ref="cartModal" :cart="cart" @get-cart="getCart"></CartModal>
 
 </template>
@@ -96,5 +101,34 @@ export default {
 }
 .cartBtn{
   font-size: 20px;
+}
+.navText{
+  @include media-576() {
+    display: none;
+  }
+}
+.mobileMenu{
+  display: none;
+  @include media-576() {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    border-top: 1px solid #dee2e6;
+    width: 100%;
+    z-index: 10;
+  }
+  .mobileMenuItem{
+    border-left: 1px solid #dee2e6;
+    &:last-child{
+      border-right: 1px solid #dee2e6;
+    }
+  }
+  .mobileMenuItemLink{
+    display: block;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 0;
+  }
 }
 </style>

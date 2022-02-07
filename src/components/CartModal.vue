@@ -22,10 +22,10 @@
           <template v-else>
             <div class="card position-relative mb-3" v-for="item in cart" :key="item.id">
               <div class="row g-0">
-                <div class="col-md-4">
+                <div class="col-4">
                   <img :src="item.product.imageUrl" alt="" class="img-fluid">
                 </div>
-                <div class="col-md-8">
+                <div class="col-8">
                   <div class="card-body d-flex flex-column justify-content-between py-2 h-100">
                     <h3 class="fs-7 text-muted text-truncate m-0">{{item.product.title}}</h3>
                     <div class="fw-bold fs-7">{{$filters.currency(item.product.price)}}</div>
@@ -48,7 +48,7 @@
                       </div>
                     </div>
                     <div v-if="isMaxNum === item.id">2123</div>
-                    <div class="d-flex justify-content-between">
+                    <div class="itemTotal justify-content-between">
                       <span>單品總計</span>
                       <span class="text-persimmon fst-italic fw-bold">
                         {{$filters.currency(item.total)}}
@@ -172,6 +172,9 @@ export default {
     margin: 0 0 0 auto;
     width: 400px;
     transform: translate3d(0%, 0, 0);
+    @include media-414() {
+      width: 100%;
+    }
   }
 
   .modal.right .modal-content {
@@ -186,6 +189,9 @@ export default {
   .modal.right.fade .modal-dialog {
     right: -400px;
     transition: opacity 0.3s linear, right 0.3s ease-out;
+    @include media-414() {
+      right: -100%;
+    }
   }
 
   .modal.right.fade.show .modal-dialog {
@@ -222,6 +228,12 @@ export default {
       width: 25px;
       height: 25px;
       line-height: 12.5px;
+    }
+    .itemTotal{
+      display: flex;
+      @include media-360() {
+        display: none;
+      }
     }
   }
 </style>

@@ -28,6 +28,9 @@ import VueWriter from 'vue-writer';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
+// vue-clipboard2
+import VueClipboard from 'vue-clipboard2';
+
 // vue 預設
 import App from './App.vue';
 import router from './router';
@@ -57,6 +60,9 @@ app.use(VueAxios, axios);
 
 // AOS
 app.use(AOS.init());
+
+// vue-clipboard2
+app.use(VueClipboard);
 
 // VueWriter
 app.use(VueWriter, VueWriter);
