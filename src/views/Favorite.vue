@@ -57,7 +57,8 @@
     </div>
     <div v-else class="notFavorite text-center">
       <p class="notFavoriteText fs-5">收藏清單並無任何商品，請點選下方按鈕收藏商品</p>
-      <button type="button" class="notFavoriteBtn btn btn-primary fw-bold fs-5">前往收藏商品</button>
+      <button type="button" class="notFavoriteBtn btn btn-primary fw-bold fs-5"
+       @click="this.$router.push('/products')">前往收藏商品</button>
     </div>
   </div>
 </template>

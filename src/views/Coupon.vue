@@ -1,6 +1,10 @@
 <template>
   <div class="coupon d-flex flex-column justify-content-center">
-    <div class="row row-cols-3 g-1 g-sm-3 g-lg-5">
+    <h2 class="couponTitle position-relative text-center mb-5 p-2">
+      <span class="fs-2">Coupon</span><br>
+      <span class="fs-4">優惠劵</span>
+    </h2>
+    <div class="row row-cols-3 g-2 g-sm-3 g-lg-5 g-xl-max">
       <div class="col">
         <div class="drawCard bg-cover border d-flex justify-content-center align-items-center
          text-white fw-bold w-100" role="button"
@@ -29,10 +33,13 @@
     <div class="message text-center my-3"
      :class="[{'show' : animationOver}, winning ?'text-success':'text-persimmon']">
       {{message}}
-      <span v-if="winning" class="badge bg-success" role="button" @click="copyCode">{{code}}</span>
+      <button v-if="winning" type="button" class="btn btn-success ms-1" @click="copyCode">
+        {{code}}
+      </button>
     </div>
     <div class="text-center">
-      <button type="button" class="restartBtn btn btn-primary" @click="randomNum">重新開始</button>
+      <button type="button" class="restartBtn btn btn-primary fw-bold"
+       @click="randomNum">重新開始</button>
     </div>
   </div>
 </template>
@@ -124,9 +131,21 @@ export default {
     margin-top: 120px;
     height: calc(100vh - 120px - 56px);
   }
+  .couponTitle{
+    &::after{
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 2px;
+      width: 100px;
+      background: var(--bs-persimmon);
+    }
+  }
   .drawCard{
     font-size: 1.5rem;
-    height: 500px;
+    height: 400px;
     background-image: url('../assets/coupon_card.jpg');
     writing-mode: tb-rl;
     letter-spacing: 1rem;
@@ -143,7 +162,7 @@ export default {
     @include media-992() {
       height: 350px;
     }
-    @include media-576() {
+    @include media-768() {
       height: 250px;
     }
     @include media-414() {
@@ -176,8 +195,10 @@ export default {
     font-size: 1.5rem;
     width: 300px;
     @include media-576() {
-      width: 100%;
       font-size: 1.25rem;
+    }
+    @include media-414() {
+      width: 100%;
     }
   }
 </style>

@@ -1,11 +1,12 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top p-0" :class="{'bg-white': bgWhite}">
+  <nav class="navbar navbar-expand-lg navbar-light border-bottom fixed-top p-0"
+   :class="{'bg-white': bgWhite}">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
         <img src="../assets/logo.png" alt="" class="img-fluid" width="100">
       </a>
       <div class="menu" id="navbarScroll">
-        <ul class="navbar-nav-scroll d-flex align-items-center list-unstyled
+        <ul class="navbar-nav-scroll d-flex align-items-center list-unstyled fw-bold
          ms-auto my-2 my-lg-0 p-3"
          style="--bs-scroll-height: 100px;">
           <li class="navText nav-item">
@@ -39,11 +40,11 @@
   <div class="mobileMenu row g-0 bg-white text-center">
     <div class="mobileMenuItem col">
       <router-link to="/products"
-       class="mobileMenuItemLink btn btn-primary focusNone">產品</router-link>
+       class="mobileMenuItemLink btn btn-primary focusNone fw-bold">產品</router-link>
     </div>
     <div class="mobileMenuItem col">
       <router-link to="/getcoupon"
-       class="mobileMenuItemLink btn btn-primary focusNone">優惠劵</router-link>
+       class="mobileMenuItemLink btn btn-primary focusNone fw-bold">優惠劵</router-link>
     </div>
   </div>
   <CartModal ref="cartModal" :cart="cart" @get-cart="getCart"></CartModal>
@@ -90,19 +91,9 @@ export default {
         }
       });
     },
-    openModal(model) {
-      let navbarComponent = this.$refs.favoriteModal;
-      switch (model) {
-        case 'favorite':
-          navbarComponent.showModal();
-          break;
-        case 'cart':
-          navbarComponent = this.$refs.cartModal;
-          navbarComponent.showModal();
-          break;
-        default:
-          break;
-      }
+    openModal() {
+      const navbarComponent = this.$refs.cartModal;
+      navbarComponent.showModal();
     },
   },
 };
