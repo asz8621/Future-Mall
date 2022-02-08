@@ -5,16 +5,26 @@
         <img src="../assets/logo.png" alt="" class="img-fluid" width="100">
       </a>
       <div class="menu" id="navbarScroll">
-        <ul class="navbar-nav-scroll d-flex list-unstyled ms-auto my-2 my-lg-0 p-3"
+        <ul class="navbar-nav-scroll d-flex align-items-center list-unstyled
+         ms-auto my-2 my-lg-0 p-3"
          style="--bs-scroll-height: 100px;">
-          <li class="navText nav-item px-2">
+          <li class="navText nav-item">
             <router-link to="/products" class="nav-link">產品</router-link>
           </li>
-          <li class="navText nav-item px-2">
+          <li class="navText nav-item">
             <router-link to="/getcoupon" class="nav-link">優惠劵</router-link>
           </li>
-          <li class="nav-item px-2">
-            <button type="button" class="cartBtn focusNone btn position-relative p-0"
+          <li class="nav-item px-3">
+            <button type="button" class="navbartBtn focusNone btn position-relative fw-bold p-0"
+             @click="$router.push('/favorite')">
+              <i class="bi bi-suit-heart"></i>
+              <span class="favoriteNum btn-primary rounded-circle position-absolute">
+                {{favoriteList.length}}
+              </span>
+            </button>
+          </li>
+          <li class="nav-item px-3">
+            <button type="button" class="navbartBtn focusNone btn position-relative fw-bold p-0"
              @click="openModal">
               <i class="bi bi-cart3"></i>
               <span class="cartNum btn-primary rounded-circle position-absolute">
@@ -50,6 +60,7 @@ export default {
   data() {
     return {
       cart: [],
+      favoriteList: [],
       bgWhite: false,
     };
   },
@@ -71,6 +82,7 @@ export default {
       }
     },
     getCart() {
+      this.favoriteList = JSON.parse(localStorage.getItem('favorite')) || [];
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.$http.get(api).then((res) => {
         if (res.data.success) {
@@ -78,9 +90,19 @@ export default {
         }
       });
     },
-    openModal() {
-      const cardComponent = this.$refs.cartModal;
-      cardComponent.showModal();
+    openModal(model) {
+      let navbarComponent = this.$refs.favoriteModal;
+      switch (model) {
+        case 'favorite':
+          navbarComponent.showModal();
+          break;
+        case 'cart':
+          navbarComponent = this.$refs.cartModal;
+          navbarComponent.showModal();
+          break;
+        default:
+          break;
+      }
     },
   },
 };
@@ -99,7 +121,15 @@ export default {
   font-size: 12px;
   line-height: 20px;
 }
-.cartBtn{
+.favoriteNum{
+  top: -8px;
+  right: -12px;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  line-height: 20px;
+}
+.navbartBtn{
   font-size: 20px;
 }
 .navText{

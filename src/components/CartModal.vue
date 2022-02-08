@@ -47,7 +47,6 @@
                         @click="delCart(item.id)"><i class="bi bi-trash"></i></button>
                       </div>
                     </div>
-                    <div v-if="isMaxNum === item.id">2123</div>
                     <div class="itemTotal justify-content-between">
                       <span>單品總計</span>
                       <span class="text-persimmon fst-italic fw-bold">
@@ -95,7 +94,6 @@ export default {
   data() {
     return {
       isCardId: '',
-      isMaxNum: '',
     };
   },
   computed: {

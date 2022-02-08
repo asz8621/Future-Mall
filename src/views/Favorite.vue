@@ -4,43 +4,37 @@
       <img src="../assets/loading.png" alt="loading" class="img-fluid">
     </div>
   </Loading>
-  <div class="products mb-5">
-    <div class="stickyTopMenu sticky-top bg-white text-center mb-3">
-      <ul class="d-inline-flex justify-content-center align-items-center
-       list-unstyled mt-3 mb-4">
-        <li class="topItem mx-2" :class="{'active': item === category}"
-        v-for="item in categoryArr" :key="item">
-          <button type="button" class="topItemBtn focusNone btn fw-bold px-3 rounded-0"
-          :class="[item === category ? 'btn-primary' : 'btn-outline-primary']"
-          @click.prevent="changeCategory(item)">{{item}}</button>
-        </li>
-      </ul>
-    </div>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+  <div class="favorite mb-5">
+    <h2 class="favoriteTitle position-relative text-center mb-5 p-2">
+      <span class="fs-2">Favorites List</span><br>
+      <span class="fs-4">收藏清單</span>
+    </h2>
+    <div v-if="favoriteList.length !== 0" class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
       <div class="col-12" v-for="item in tempProducts" :key="item.id">
         <div class="card rounded-0 rounded-top">
           <div class="cardImg" role="button">
             <img :src="item.imageUrl" class="card-img-top" :alt="item.title"
-             @click.prevent="pushProduct(item.id)">
+            @click.prevent="pushProduct(item.id)">
           </div>
           <div class="card-body">
-
             <div class="d-flex justify-content-between align-items-center fs-4 mb-3">
               <h5 class="cardTitle m-0" role="button"
                 @click.prevent="pushProduct(item.id)">{{item.title}}
               </h5>
-              <div @click="addFavorite(item.id)">
+              <div @click="removeFavorite(item.id)">
                 <i class="bi text-persimmon" role="button"
                 :class="item.favorite ? 'bi-suit-heart-fill' : 'bi-suit-heart'"></i>
               </div>
             </div>
             <p class="cardText text-secondary">{{item.description}}</p>
             <div v-if="item.origin_price !== item.price"
-             class="d-flex justify-content-between align-items-center">
+            class="d-flex justify-content-between align-items-center">
               <p class="originPrice text-decoration-line-through text-secondary fst-italic m-0">
                 {{$filters.currency(item.origin_price)}}
               </p>
-              <p class="text-persimmon fst-italic fw-bold m-0">{{$filters.currency(item.price)}}</p>
+              <p class="text-persimmon fst-italic fw-bold m-0">
+                {{$filters.currency(item.price)}}
+              </p>
             </div>
             <div v-else class="text-persimmon text-end">
               <p class="fw-bold fst-italic m-0">{{$filters.currency(item.price)}}</p>
@@ -48,8 +42,8 @@
           </div>
           <div class="card-footer border-top-0 p-0">
             <button type="button" class="btn btn-persimmon text-white fw-bold focusNone
-             w-100 rounded-0"
-             @click.prevent="addCart(item.id)">
+            w-100 rounded-0"
+            @click.prevent="addCart(item.id)">
               <span v-if="btnLoading !== item.id">
                 <i class="bi bi-cart-plus"></i> Add Cart
               </span>
@@ -60,6 +54,10 @@
           </div>
         </div>
       </div>
+    </div>
+    <div v-else class="notFavorite text-center">
+      <p class="notFavoriteText fs-5">收藏清單並無任何商品，請點選下方按鈕收藏商品</p>
+      <button type="button" class="notFavoriteBtn btn btn-primary fw-bold fs-5">前往收藏商品</button>
     </div>
   </div>
 </template>
@@ -72,8 +70,6 @@ export default {
       favoriteList: [],
       isLoading: false,
       btnLoading: '',
-      categoryArr: ['全部', '想念', '知識', '預知', '便利', '其它'],
-      category: '全部',
     };
   },
   inject: ['emitter'],
@@ -94,23 +90,13 @@ export default {
           this.favoriteList.forEach((id) => {
             const productIndex = this.products.findIndex((item) => item.id === id);
             this.products[productIndex].favorite = true;
+            this.tempProducts.push(this.products[productIndex]);
           });
-          // 拷貝一份新的
-          this.tempProducts = [...this.products];
         }
       });
     },
     pushProduct(id) {
       this.$router.push(`/product/${id}`);
-    },
-    changeCategory(type) {
-      this.category = type;
-      if (type === '全部') {
-        this.tempProducts = [...this.products];
-      } else {
-        const temp = [...this.products];
-        this.tempProducts = temp.filter((item) => item.category === type);
-      }
     },
     addCart(id) {
       this.btnLoading = id;
@@ -128,24 +114,11 @@ export default {
         });
       });
     },
-    addFavorite(id) {
-      // 取點選收藏的 Product index
-      let isFavoriteIndex = 0;
-
-      if (this.favoriteList.indexOf(id) === -1) { // 沒收藏過就新增到 localStorage
-        this.favoriteList.push(id);
-        localStorage.setItem('favorite', JSON.stringify(this.favoriteList));
-      } else { // 有收藏過就刪除 localStorage
-        const localStorageIndex = this.favoriteList.findIndex((item) => item === id);
-        this.favoriteList.splice(localStorageIndex, 1);
-        localStorage.setItem('favorite', JSON.stringify(this.favoriteList));
-      }
-
-      // 修改 tempProducts 的 favorite 狀態
-      isFavoriteIndex = this.tempProducts.findIndex((i) => i.id === id);
-      const productItem = this.tempProducts[isFavoriteIndex];
-      productItem.favorite = !productItem.favorite;
-
+    removeFavorite(id) {
+      const localStorageIndex = this.favoriteList.findIndex((item) => item === id);
+      this.favoriteList.splice(localStorageIndex, 1);
+      this.tempProducts.splice(localStorageIndex, 1);
+      localStorage.setItem('favorite', JSON.stringify(this.favoriteList));
       this.emitter.emit('get-data');
     },
   },
@@ -154,13 +127,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.products{
+.favorite{
   margin-top: 120px;
 }
-.stickyTopMenu{
-  top: 90px;
-  @include media-576() {
-    overflow-x: auto;
+.favoriteTitle{
+  &::after{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 2px;
+    width: 100px;
+    background: var(--bs-persimmon);
   }
 }
 .cardText{
@@ -183,13 +162,17 @@ export default {
     }
   }
 }
-.topItemBtn{
-  white-space: nowrap;
-}
 .originPrice{
   font-size: 14px;
   @include media-768() {
     font-size: 12px;
+  }
+}
+.notFavorite{
+  .notFavoriteBtn{
+    @include media-414() {
+      width: 100%;
+    }
   }
 }
 </style>

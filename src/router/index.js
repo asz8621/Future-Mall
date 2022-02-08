@@ -26,6 +26,10 @@ const routes = [
         path: 'getcoupon',
         component: () => import('../views/Coupon.vue'),
       },
+      {
+        path: 'favorite',
+        component: () => import('../views/Favorite.vue'),
+      },
     ],
   },
   {

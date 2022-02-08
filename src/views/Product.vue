@@ -6,7 +6,7 @@
   </Loading>
   <div class="product border mb-5">
     <div class="row g-0">
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-lg-6">
         <div class="position-relative">
           <button type="button"
            class="preBtn btn btn-outline-primary focusNone position-absolute top-50 start-0
@@ -23,11 +23,16 @@
            </button>
         </div>
       </div>
-      <div class="col-12 col-md-6 align-self-center">
+      <div class="col-12 col-lg-6 align-self-center">
         <div class="p-3">
 
           <div class="position-relative">
-            <h1>{{product.title}}</h1>
+            <h1>
+              {{product.title}}
+              <i class="bi text-persimmon" role="button"
+                :class="product.favorite ? 'bi-suit-heart-fill' : 'bi-suit-heart'"
+                @click="addFavorite(product.id)"></i>
+            </h1>
             <small class="position-absolute bottom-0 end-0 badge rounded-pill bg-secondary">
               {{product.category}}
             </small>
@@ -85,6 +90,7 @@ export default {
       id: '',
       product: {},
       products: [],
+      favoriteList: [],
       isLoading: false,
       btnLoading: '',
       qty: 1,
@@ -94,7 +100,6 @@ export default {
   created() {
     this.getAllProduct();
     this.getProduct();
-    console.log('999');
   },
   methods: {
     getAllProduct() {
@@ -113,6 +118,7 @@ export default {
       });
     },
     getProduct(id) {
+      this.favoriteList = JSON.parse(localStorage.getItem('favorite')) || [];
       if (id) {
         this.id = id;
       } else {
@@ -124,6 +130,10 @@ export default {
         if (res.data.success) {
           this.product = res.data.product;
           this.isLoading = false;
+          // 是否是收藏商品
+          if (this.favoriteList.indexOf(this.product.id) !== -1) {
+            this.product.favorite = true;
+          }
         }
       });
     },
@@ -167,6 +177,20 @@ export default {
           title: '成功加入購物車',
         });
       });
+    },
+    addFavorite(id) {
+      if (this.favoriteList.indexOf(id) === -1) { // 沒收藏過就新增到 localStorage
+        this.favoriteList.push(id);
+        localStorage.setItem('favorite', JSON.stringify(this.favoriteList));
+      } else { // 有收藏過就刪除 localStorage
+        const localStorageIndex = this.favoriteList.findIndex((item) => item === id);
+        this.favoriteList.splice(localStorageIndex, 1);
+        localStorage.setItem('favorite', JSON.stringify(this.favoriteList));
+      }
+      // 改變資料狀態
+      this.product.favorite = !this.product.favorite;
+
+      this.emitter.emit('get-data');
     },
   },
 };
