@@ -420,7 +420,7 @@
         <!-- 完成訂單 -->
         <div v-else-if="isFinish" class="step3">
           <h3 class="text-center mb-5">完成訂單</h3>
-          <p>訂單已送出，我們確認金額無誤後會盡快送出商品，感謝您的光臨。</p>
+          <p class="text-center fs-5">訂單已送出，我們確認金額無誤後會盡快送出商品，感謝您的光臨。</p>
         </div>
 
       </transition>
