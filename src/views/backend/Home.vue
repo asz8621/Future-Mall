@@ -1,6 +1,8 @@
 <template>
   <div class="home">
-    home
+    <div class="d-flex justify-content-center align-items-center h-100">
+      <p class="fs-1">歡迎到 Future Mall 後台</p>
+    </div>
   </div>
 </template>
 
@@ -9,10 +11,14 @@
 export default {
   data() {
     return {
-      user: {
-        name: '',
-      },
+
     };
   },
 };
 </script>
+
+<style lang="scss" scoped>
+  .home{
+    height: calc(100vh - 90px);
+  }
+</style>
