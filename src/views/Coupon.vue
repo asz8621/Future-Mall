@@ -39,7 +39,7 @@
     </div>
     <div class="text-center">
       <button type="button" class="restartBtn btn btn-primary fw-bold"
-       @click="randomNum">重新開始</button>
+       @click="randomNum" :disabled="!animationOver">重新開始</button>
     </div>
   </div>
 </template>
