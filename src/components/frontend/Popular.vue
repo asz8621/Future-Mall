@@ -252,6 +252,9 @@ export default {
     @include media-768() {
       margin-bottom: 1rem;
     }
+    @include media-576() {
+      @include multiLine(25px, 1);
+    }
   }
   .bestsellersPrice{
     font-size: 1.5rem;

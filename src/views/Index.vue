@@ -22,16 +22,14 @@
 
     <div class="introduce text-white d-flex align-items-center">
       <div class="introduceBlock">
-        <div class="p-3 p-lg-4">
-          <p class="fs-4 m-0">
-            FUTURE MALL 透過智能 AI 隨機從網路上找尋遇到困難需要幫助的人，
-            請盡可能購買你所需要的商品，
-            或許下次您會無法連線到此網站，
-            本站商品都來自 2100 年，
-            不論您是否相信本站商品，
-            FUTURE MALL 會盡可能的幫助您。
-          </p>
-        </div>
+        <p class="fs-4 m-0">
+          FUTURE MALL 透過智能 AI 隨機從網路上找尋遇到困難需要幫助的人，
+          請盡可能購買你所需要的商品，
+          或許下次您會無法連線到此網站，
+          本站商品都來自 2100 年，
+          不論您是否相信本站商品，
+          FUTURE MALL 會盡可能的幫助您。
+        </p>
       </div>
       <div class="introduceTitle">
         <div class="diagonalContainer diagonal">
@@ -46,7 +44,7 @@
 
     <div class="introduce introduceBorderTop border-top border-white border-2
      d-flex align-items-center pb-5 pb-md-0">
-      <div class="introduceBlock p-3 p-lg-4">
+      <div class="introduceBlock popular">
           <Popular :popular="popular"></Popular>
       </div>
       <div class="introduceTitle">
@@ -86,7 +84,7 @@
 
 <script>
 
-import Popular from '@/components/Popular.vue';
+import Popular from '@/components/frontend/Popular.vue';
 
 export default {
   components: {
@@ -267,6 +265,7 @@ export default {
 }
 .introduceBlock{
   width: 80%;
+  padding: 1.25rem;
   @include media-1400() {
     width: 75%;
   }
@@ -281,6 +280,11 @@ export default {
   }
   @include media-768() {
     width: 100%;
+  }
+  &.popular{
+    @include media-414() {
+      padding: 1rem 2.5rem;
+    }
   }
 }
 .introduceTitle{

@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import Navbar from './Navbar.vue';
-import Footer from './Footer.vue';
+import Navbar from '@/components/frontend/Navbar.vue';
+import Footer from '@/components/frontend/Footer.vue';
 import emitter from '@/methods/emitter';
 import ToastMessages from '@/components/ToastMessages.vue';
 

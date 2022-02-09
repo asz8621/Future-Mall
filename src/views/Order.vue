@@ -7,7 +7,7 @@
   </Loading>
 
   <!-- Navbar -->
-  <div class="orderNavbar text-center mb-5">
+  <div class="orderNavbar text-center my-3 mb-sm-5">
     <img src="../assets/logo.png" alt="" class="logo">
   </div>
 
@@ -720,6 +720,9 @@ export default {
   .orderNavbar{
     .logo{
       width: 150px;
+      @include media-576() {
+        width: 60px;
+      }
     }
   }
   .fixedBottomBtn{
@@ -797,6 +800,9 @@ export default {
   .cartList{
     margin-bottom: 170px;
     overflow: hidden;
+    @include media-576() {
+      margin-bottom: 220px;
+    }
   }
   .cartListItem{
     border-bottom-color: #dee2e6;

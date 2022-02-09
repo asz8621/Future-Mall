@@ -3,11 +3,12 @@
    :class="{'bg-white': bgWhite}">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
-        <img src="../assets/logo.png" alt="" class="img-fluid" width="100">
+        <img src="../../assets/logo.png" alt="" class="logo img-fluid"
+        :width="bgWhite ? '60' : '100'">
       </a>
       <div class="menu" id="navbarScroll">
         <ul class="navbar-nav-scroll d-flex align-items-center list-unstyled fw-bold
-         ms-auto my-2 my-lg-0 p-3"
+         p-2 pt-3 p-sm-3 m-0"
          style="--bs-scroll-height: 100px;">
           <li class="navText nav-item">
             <router-link to="/products" class="nav-link">產品</router-link>
@@ -52,7 +53,7 @@
 </template>
 
 <script>
-import CartModal from '@/components/CartModal.vue';
+import CartModal from '@/components/frontend/CartModal.vue';
 
 export default {
   components: {
@@ -103,6 +104,9 @@ export default {
 .navbar{
   background: rgba(255, 255, 255, 0.75);
   transition: all .5s;
+  .logo{
+    transition: .5s;
+  }
 }
 .cartNum{
   top: -8px;

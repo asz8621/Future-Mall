@@ -158,8 +158,9 @@ export default {
   margin-top: 120px;
 }
 .stickyTopMenu{
-  top: 90px;
+  top: 72px;
   @include media-576() {
+    top: 58px;
     overflow-x: auto;
   }
 }
