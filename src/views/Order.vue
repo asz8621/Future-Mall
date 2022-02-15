@@ -22,7 +22,7 @@
             <input type="text" class="form-control" placeholder="輸入折扣碼"
              aria-label="Input group" aria-describedby="coupon" v-model="coupon.couponCode"
              :disabled="coupon.isCoupon || coupon.isClick || cart.length === 0">
-            <button type="button" class="input-group-text btn btn-primary" id="coupon"
+            <button type="button" class="input-group-text btn btn-primary fw-bold" id="coupon"
              :disabled="coupon.isCoupon || coupon.isClick || cart.length === 0"
              @click="confirmCoupon">
               <div v-if="coupon.isClick"

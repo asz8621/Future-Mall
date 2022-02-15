@@ -16,7 +16,8 @@
            class="noCart d-flex justify-content-center align-items-center h-100">
             <div class="text-center p-3">
               <div class="mb-3">購物車並無商品，請點選下方按鈕選擇商品</div>
-              <button type="button" class="btn btn-primary" @click="goShopping">前往購物</button>
+              <button type="button" class="btn btn-primary fw-bold"
+               @click="goShopping">前往購物</button>
             </div>
           </div>
           <template v-else>
@@ -70,9 +71,9 @@
             <span class="me-1">總計</span>
             <span class="text-persimmon fst-italic">{{$filters.currency(totalPrice)}}</span>
           </div>
-          <button type="button" class="btn btn-primary w-100"
+          <button type="button" class="btn btn-primary w-100 fw-bold"
            :disabled="isCardId !== '' || cart.length === 0" @click="checkOut">結帳</button>
-          <!-- <button type="button" class="btn btn-danger w-100"
+          <!-- <button type="button" class="btn btn-danger w-100 fw-bold"
           @click="delAllCart">清除購物車</button> -->
         </div>
       </div>

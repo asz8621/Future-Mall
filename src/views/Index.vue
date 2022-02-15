@@ -21,7 +21,7 @@
     </div>
 
     <div class="introduce text-white d-flex align-items-center">
-      <div class="introduceBlock">
+      <div class="introduceBlock" data-aos="fade-right">
         <p class="fs-4 m-0">
           FUTURE MALL 透過智能 AI 隨機從網路上找尋遇到困難需要幫助的人，
           請盡可能購買你所需要的商品，
@@ -31,7 +31,7 @@
           FUTURE MALL 會盡可能的幫助您。
         </p>
       </div>
-      <div class="introduceTitle">
+      <div class="introduceTitle" data-aos="fade-left">
         <div class="diagonalContainer diagonal">
           <h3 class="introduceTitleText text-center p-2 m-0">
             <span class="fs-2">About Us</span>
@@ -44,10 +44,10 @@
 
     <div class="introduce introduceBorderTop border-top border-white border-2
      d-flex align-items-center pb-5 pb-md-0">
-      <div class="introduceBlock popular">
+      <div class="introduceBlock popular" data-aos="fade-right">
           <Popular :popular="popular"></Popular>
       </div>
-      <div class="introduceTitle">
+      <div class="introduceTitle" data-aos="fade-left">
         <div class="diagonalContainer diagonalReverse">
           <h3 class="introduceTitleText text-center text-white p-2 m-0">
             <span class="fs-2">Bestsellers</span>
@@ -61,12 +61,12 @@
     <div class="subscription bg-cover d-flex justify-content-center align-items-center
      align-items-md-end flex-column p-3 p-md-5 vh-100">
       <div class="subscriptionBlock">
-        <div class="text-white mb-3">
+        <div class="text-white mb-3" data-aos="zoom-in">
           <div>還在困擾什麼嗎 ?</div>
           <div>透過 AI 演算不定期推薦商品</div>
         </div>
-        <Form @submit="sendEDM" v-slot="{errors}"
-         class="d-flex position-relative">
+        <Form @submit="sendEDM" v-slot="{errors}" class="d-flex position-relative"
+         data-aos="zoom-in">
           <Field type="email" name="email" class="subscriptionInput outlineNone fs-6 fs-md-5 p-2"
             placeholder="請輸入信箱" autocomplete="off" v-model.trim="email"
             :class="{'is-invalid': errors['email']}"
@@ -74,7 +74,7 @@
           </Field>
           <error-message v-if="errors" name="email"
             class="invalid-feedback errorText text-persimmon"></error-message>
-          <button  type="submit" class="subscriptionBtn btn btn-primary rounded-0"
+          <button  type="submit" class="subscriptionBtn btn btn-primary rounded-0 fw-bold"
            :disabled="email === '' || Object.keys(errors).length === 1">訂閱</button>
         </Form>
       </div>
@@ -259,6 +259,7 @@ export default {
 // introduce
 .introduce{
   background: #080807;
+  overflow: hidden;
   @include media-768() {
     flex-direction: column-reverse;
   }

@@ -1,10 +1,10 @@
 <template>
-  <div class="coupon d-flex flex-column justify-content-center">
+  <div class="coupon d-flex flex-column justify-content-center" data-aos="zoom-in">
     <h2 class="couponTitle position-relative text-center mb-5 p-2">
       <span class="fs-2">Coupon</span><br>
       <span class="fs-4">優惠劵</span>
     </h2>
-    <div class="row row-cols-3 g-2 g-sm-3 g-lg-5 g-xl-max">
+    <div class="row g-2 g-sm-3 g-lg-5 g-xl-max">
       <div class="col">
         <div class="drawCard bg-cover border d-flex justify-content-center align-items-center
          text-white fw-bold w-100" role="button"
@@ -33,7 +33,7 @@
     <div class="message text-center my-3"
      :class="[{'show' : animationOver}, winning ?'text-success':'text-persimmon']">
       {{message}}
-      <button v-if="winning" type="button" class="btn btn-success ms-1" @click="copyCode">
+      <button v-if="winning" type="button" class="btn btn-success fw-bold ms-1" @click="copyCode">
         {{code}}
       </button>
     </div>
