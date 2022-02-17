@@ -32,11 +32,14 @@
         </div>
       </div>
       <div class="message text-center my-3"
-      :class="[{'show' : animationOver}, winning ?'text-success':'text-persimmon']">
-        {{message}}
-        <button v-if="winning" type="button" class="btn btn-success fw-bold ms-1" @click="copyCode">
-          {{code}}
-        </button>
+       :class="[{'show' : animationOver}, winning ?'text-success':'text-persimmon']">
+        <p>{{message}}</p>
+        <div v-if="winning" class="d-flex justify-content-center">
+          <span class="fs-4 text-persimmon me-2">{{codeText}}</span>
+          <button type="button" class="btn btn-success fw-bold" @click="copyCode">
+            {{code}}
+          </button>
+        </div>
       </div>
       <div class="text-center">
         <button type="button" class="restartBtn btn btn-primary fw-bold"
@@ -59,6 +62,7 @@ export default {
       message: '',
       animationOver: false,
       code: '2022FM',
+      codeText: '結帳享有 8 折優惠',
     };
   },
   inject: ['emitter'],
@@ -121,7 +125,7 @@ export default {
               break;
           }
           this.winning = true;
-          this.message = '恭喜中獎 ~ 點擊優惠劵即可複製';
+          this.message = '恭喜中獎 ~ 點擊綠色方框即可複製優惠劵';
         }
       }, 5100);
     },
@@ -172,8 +176,6 @@ export default {
     }
   }
   .message{
-    height: 50px;
-    line-height: 50px;
     opacity: 0;
     transition: .5s;
     &.show{

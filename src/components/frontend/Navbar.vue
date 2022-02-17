@@ -14,7 +14,7 @@
             <router-link to="/products" class="nav-link">產品</router-link>
           </li>
           <li class="navText nav-item">
-            <router-link to="/getcoupon" class="nav-link">優惠劵</router-link>
+            <router-link to="/getcoupon" class="nav-link">優惠活動</router-link>
           </li>
           <li class="nav-item px-3">
             <button type="button" class="navbartBtn focusNone btn position-relative fw-bold p-0"
@@ -45,7 +45,7 @@
     </div>
     <div class="mobileMenuItem col">
       <router-link to="/getcoupon"
-       class="mobileMenuItemLink btn btn-primary focusNone fw-bold">優惠劵</router-link>
+       class="mobileMenuItemLink btn btn-primary focusNone fw-bold">優惠活動</router-link>
     </div>
   </div>
   <CartModal ref="cartModal" :cart="cart" @get-cart="getCart"></CartModal>
