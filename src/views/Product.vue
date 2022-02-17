@@ -4,7 +4,7 @@
       <img src="../assets/loading.png" alt="loading" class="img-fluid">
     </div>
   </Loading>
-  <div class="product border mb-5">
+  <div class="product containerTop border mb-5">
     <div class="row g-0">
       <div class="col-12 col-lg-6">
         <div class="position-relative">
@@ -198,21 +198,20 @@ export default {
 
 <style lang="scss" scoped>
   .product{
-    margin-top: 120px;
-  }
-  .preBtn, .nextBtn{
-    transition: .5s;
-  }
-  .operate{
-    .operateNum{
-      @include media-992() {
-        width: 100%;
-      }
+    .preBtn, .nextBtn{
+      transition: .5s;
     }
-    .operateAddBtn{
-      width: 150px;
-      @include media-992() {
-        width: 100%;
+    .operate{
+      .operateNum{
+        @include media-992() {
+          width: 100%;
+        }
+      }
+      .operateAddBtn{
+        width: 150px;
+        @include media-992() {
+          width: 100%;
+        }
       }
     }
   }

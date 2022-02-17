@@ -48,6 +48,13 @@ const routes = [
           title: '我的收藏｜FUTURE MALL',
         },
       },
+      {
+        path: 'returnProcess',
+        component: () => import('../views/returnProcess.vue'),
+        meta: {
+          title: '退換貨流程須知｜FUTURE MALL',
+        },
+      },
     ],
   },
   {

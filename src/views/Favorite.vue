@@ -4,11 +4,11 @@
       <img src="../assets/loading.png" alt="loading" class="img-fluid">
     </div>
   </Loading>
-  <div class="favorite mb-5">
-    <h2 class="favoriteTitle position-relative text-center mb-5 p-2">
+  <div class="favorite containerTop mb-5">
+    <h1 class="pageTitle position-relative text-center mb-5 p-2">
       <span class="fs-2">Favorites List</span><br>
       <span class="fs-4">收藏清單</span>
-    </h2>
+    </h1>
 
     <ProductsCard v-if="favoriteList.length !== 0" :tempProducts="tempProducts"
      :favoriteList="favoriteList" page="favorite"></ProductsCard>
@@ -65,19 +65,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.favorite{
-  margin-top: 120px;
-}
-.favoriteTitle{
-  &::after{
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 2px;
-    width: 100px;
-    background: var(--bs-persimmon);
-  }
-}
+
 </style>

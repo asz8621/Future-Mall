@@ -1,45 +1,47 @@
 <template>
-  <div class="coupon d-flex flex-column justify-content-center" data-aos="zoom-in">
-    <h2 class="couponTitle position-relative text-center mb-5 p-2">
-      <span class="fs-2">Coupon</span><br>
-      <span class="fs-4">優惠劵</span>
-    </h2>
-    <div class="row g-2 g-sm-3 g-lg-5 g-xl-max">
-      <div class="col">
-        <div class="drawCard bg-cover border d-flex justify-content-center align-items-center
-         text-white fw-bold w-100" role="button"
-         :class="{'animation' : isSelectId === 'card1'}"
-         @click="drawCard(0)">
-          {{card1}}
+  <div class="coupon containerTop" data-aos="zoom-in">
+    <div class="d-flex flex-column justify-content-center">
+      <h1 class="pageTitle position-relative text-center mb-5 p-2">
+        <span class="fs-2">Coupon</span><br>
+        <span class="fs-4">優惠劵</span>
+      </h1>
+      <div class="row g-2 g-sm-3 g-lg-5 g-xl-max">
+        <div class="col">
+          <div class="drawCard bg-cover border d-flex justify-content-center align-items-center
+          text-white fw-bold w-100" role="button"
+          :class="{'animation' : isSelectId === 'card1'}"
+          @click="drawCard(0)">
+            {{card1}}
+          </div>
+        </div>
+        <div class="col">
+          <div class="drawCard bg-cover border d-flex justify-content-center align-items-center
+          text-white fw-bold w-100" role="button"
+          :class="{'animation' : isSelectId === 'card2'}"
+          @click="drawCard(1)">
+            {{card2}}
+          </div>
+        </div>
+        <div class="col">
+          <div class="drawCard bg-cover border d-flex justify-content-center align-items-center
+          text-white fw-bold w-100" role="button"
+          :class="{'animation' : isSelectId === 'card3'}"
+          @click="drawCard(2)">
+            {{card3}}
+          </div>
         </div>
       </div>
-      <div class="col">
-        <div class="drawCard bg-cover border d-flex justify-content-center align-items-center
-         text-white fw-bold w-100" role="button"
-         :class="{'animation' : isSelectId === 'card2'}"
-         @click="drawCard(1)">
-          {{card2}}
-        </div>
+      <div class="message text-center my-3"
+      :class="[{'show' : animationOver}, winning ?'text-success':'text-persimmon']">
+        {{message}}
+        <button v-if="winning" type="button" class="btn btn-success fw-bold ms-1" @click="copyCode">
+          {{code}}
+        </button>
       </div>
-      <div class="col">
-        <div class="drawCard bg-cover border d-flex justify-content-center align-items-center
-         text-white fw-bold w-100" role="button"
-         :class="{'animation' : isSelectId === 'card3'}"
-         @click="drawCard(2)">
-          {{card3}}
-        </div>
+      <div class="text-center">
+        <button type="button" class="restartBtn btn btn-primary fw-bold"
+        @click="randomNum" :disabled="!animationOver">重新開始</button>
       </div>
-    </div>
-    <div class="message text-center my-3"
-     :class="[{'show' : animationOver}, winning ?'text-success':'text-persimmon']">
-      {{message}}
-      <button v-if="winning" type="button" class="btn btn-success fw-bold ms-1" @click="copyCode">
-        {{code}}
-      </button>
-    </div>
-    <div class="text-center">
-      <button type="button" class="restartBtn btn btn-primary fw-bold"
-       @click="randomNum" :disabled="!animationOver">重新開始</button>
     </div>
   </div>
 </template>
@@ -128,20 +130,7 @@ export default {
 </script>
 <style lang="scss" scoped>
   .coupon{
-    margin-top: 120px;
     height: calc(100vh - 120px - 56px);
-  }
-  .couponTitle{
-    &::after{
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      height: 2px;
-      width: 100px;
-      background: var(--bs-persimmon);
-    }
   }
   .drawCard{
     font-size: 1.5rem;

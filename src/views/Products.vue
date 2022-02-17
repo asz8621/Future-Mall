@@ -4,7 +4,7 @@
       <img src="../assets/loading.png" alt="loading" class="img-fluid">
     </div>
   </Loading>
-  <div class="products mb-5">
+  <div class="products containerTop mb-5">
     <div class="stickyTopMenu sticky-top bg-white border-bottom text-center mb-3">
       <ul class="d-inline-flex justify-content-center align-items-center
        list-unstyled mt-3 mb-4">
@@ -78,16 +78,15 @@ export default {
 
 <style lang="scss" scoped>
 .products{
-  margin-top: 120px;
-}
-.stickyTopMenu{
-  top: 72px;
-  @include media-576() {
-    top: 58px;
-    overflow-x: auto;
+  .stickyTopMenu{
+    top: 72px;
+    @include media-576() {
+      top: 58px;
+      overflow-x: auto;
+    }
   }
-}
-.topItemBtn{
-  white-space: nowrap;
+  .topItemBtn{
+    white-space: nowrap;
+  }
 }
 </style>
