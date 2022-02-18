@@ -73,7 +73,6 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupons/?page=${page}`;
       this.isLoading = true;
       this.$http.get(api).then((res) => {
-        console.log(res.data);
         if (res.data.success) {
           this.coupons = res.data.coupons;
           this.pagination = res.data.pagination;
@@ -109,7 +108,6 @@ export default {
             title: '更新失敗',
             content: res.data.message.join('、'),
           });
-          console.log(res.data);
         }
 
         couponComponent.hideModal();

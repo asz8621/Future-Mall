@@ -91,7 +91,6 @@ export default {
     },
     isFavorite(id, page) {
       const localStorageIndex = this.favoriteArray.findIndex((item) => item === id);
-      console.log(localStorageIndex);
       if (page === 'products') { // 可新增 & 刪除收藏
         // 取點選收藏的 Product index
         let isFavoriteIndex = 0;
