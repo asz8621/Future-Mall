@@ -18,6 +18,12 @@
           </li>
           <li class="nav-item px-3">
             <button type="button" class="navbartBtn focusNone btn position-relative fw-bold p-0"
+             @click="$router.push('/admin/login')">
+              <i class="bi bi-person"></i>
+            </button>
+          </li>
+          <li class="nav-item px-3">
+            <button type="button" class="navbartBtn focusNone btn position-relative fw-bold p-0"
              @click="$router.push('/favorite')">
               <i class="bi bi-suit-heart"></i>
               <span class="favoriteNum btn-primary rounded-circle position-absolute">

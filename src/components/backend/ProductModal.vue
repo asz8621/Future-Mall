@@ -147,16 +147,10 @@ export default {
       isLoading: false,
       init: {
         selector: 'textarea',
-        height: 300,
-        plugins: 'preview code fullscreen image media codesample charmap imagetools help charmap emoticons',
-        menubar: false,
-        skin: 'oxide',
-        content_css: false,
-        toolbar: [
-          'undo redo | code fullscreen  preview | formatselect',
-          'fontselect fontsizeselect forecolor backcolor removeformat | bold italic underline strikethrough charmap emoticons',
-          'alignleft aligncenter alignright alignjustify outdent indent numlist bullist | image media',
-        ],
+        height: 500,
+        forced_root_block: 'div',
+        plugins: 'print preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern help',
+        toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
       },
     };
   },
