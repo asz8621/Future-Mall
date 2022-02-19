@@ -1,6 +1,6 @@
 <template>
   <div class="coupon containerTop" data-aos="zoom-in">
-    <div class="d-flex flex-column justify-content-center">
+    <div class="d-flex flex-column justify-content-center overflow-hidden">
       <h1 class="pageTitle position-relative text-center mb-5 p-2">
         <span class="fs-2">Coupon</span><br>
         <span class="fs-4">優惠劵</span>

@@ -5,8 +5,7 @@
       <ToastMessages></ToastMessages>
       <router-view></router-view>
     </div>
-    <Footer class="mt-auto" v-if="$route.path !== '/order' && $route.path !== '/favorite' &&
-     $route.path !== '/getcoupon'"></Footer>
+    <Footer class="mt-auto" v-if="$route.path !== '/order'"></Footer>
   </div>
 </template>
 
