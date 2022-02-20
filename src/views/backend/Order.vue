@@ -3,6 +3,7 @@
   <table class="table mt-4">
     <thead>
       <tr class="text-center">
+        <th width="250">訂單編號</th>
         <th>姓名</th>
         <th>電話</th>
         <th>信箱</th>
@@ -13,6 +14,7 @@
     </thead>
     <tbody>
       <tr v-for="item in orders" :key="item.id" class="text-center">
+        <td>{{item.id}}</td>
         <td>{{item.user.name}}</td>
         <td>{{item.user.tel}}</td>
         <td>{{item.user.email}}</td>

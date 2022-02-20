@@ -34,6 +34,10 @@
             <table class="table" v-if="tempOrder.user">
               <tbody>
                 <tr>
+                  <th width="100">訂單編號</th>
+                  <td>{{tempOrder.id}}</td>
+                </tr>
+                <tr>
                   <th width="100">姓名</th>
                   <td>{{tempOrder.user.name}}</td>
                 </tr>

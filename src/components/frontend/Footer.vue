@@ -17,6 +17,9 @@
             <router-link class="footerLink text-white text-decoration-none" to="/favorite">
               收藏清單
             </router-link>
+            <router-link class="footerLink text-white text-decoration-none" to="/checkingOrder">
+              訂單查詢
+            </router-link>
             <router-link class="footerLink text-white text-decoration-none" to="/returnProcess">
               退貨退款須知
             </router-link>

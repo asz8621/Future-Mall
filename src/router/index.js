@@ -55,6 +55,20 @@ const routes = [
           title: '退換貨流程須知｜FUTURE MALL',
         },
       },
+      {
+        path: 'returnForm',
+        component: () => import('../views/returnForm.vue'),
+        meta: {
+          title: '退貨申請表｜FUTURE MALL',
+        },
+      },
+      {
+        path: 'checkingOrder',
+        component: () => import('../views/CheckingOrder.vue'),
+        meta: {
+          title: '查詢訂單編號｜FUTURE MALL',
+        },
+      },
     ],
   },
   {

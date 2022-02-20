@@ -1,10 +1,4 @@
 <template>
-
-  <Loading v-model:active="isLoading" :z-index="9999">
-    <div class="rotationLoading">
-      <img src="../assets/loading.png" alt="loading" class="img-fluid">
-    </div>
-  </Loading>
   <div class="returnProcess containerTop g-1">
     <h1 class="pageTitle position-relative text-center mb-5 p-2">
       <span class="fs-2">Return & Refund Notice</span><br>
@@ -70,7 +64,7 @@
     <div class="mb-5">
       <h3>退貨申請說明</h3>
       <ul class="mb-5">
-        <li>請填妥退貨申請表之
+        <li>請填妥<router-link to="/returnForm">退貨申請表</router-link>之
           <span class="text-danger">姓名、Email、手機號碼、訂單編號及退貨原因</span>等，
           若使用信用卡以外的方式付款，則需填寫匯款帳號。收到您的退貨申請後，
           我們立即與您確認退貨相關事宜。

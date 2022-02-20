@@ -11,31 +11,37 @@
          p-2 pt-3 p-sm-3 m-0"
          style="--bs-scroll-height: 100px;">
           <li class="navText nav-item">
-            <router-link to="/products" class="nav-link">產品</router-link>
+            <router-link to="/products" class="nav-link px-2 px-md-3">產品</router-link>
           </li>
           <li class="navText nav-item">
-            <router-link to="/getcoupon" class="nav-link">優惠活動</router-link>
+            <router-link to="/getcoupon" class="nav-link px-2 px-md-3">優惠活動</router-link>
           </li>
-          <li class="nav-item px-3">
-            <button type="button" class="navbartBtn focusNone btn position-relative fw-bold p-0"
+          <li class="navText nav-item">
+            <router-link to="/checkingOrder" class="nav-link px-2 px-md-3">訂單查詢</router-link>
+          </li>
+          <li class="nav-item">
+            <button type="button"
+             class="navbartBtn focusNone btn position-relative fw-bold px-2 px-md-3"
              @click="$router.push('/admin/login')">
               <i class="bi bi-person"></i>
             </button>
           </li>
-          <li class="nav-item px-3">
-            <button type="button" class="navbartBtn focusNone btn position-relative fw-bold p-0"
+          <li class="nav-item">
+            <button type="button"
+             class="navbartBtn focusNone btn position-relative fw-bold px-2 px-md-3"
              @click="$router.push('/favorite')">
               <i class="bi bi-suit-heart"></i>
-              <span class="favoriteNum btn-primary rounded-circle position-absolute">
+              <span class="navbarIconNum btn-primary rounded-circle position-absolute">
                 {{favoriteList.length}}
               </span>
             </button>
           </li>
-          <li class="nav-item px-3">
-            <button type="button" class="navbartBtn focusNone btn position-relative fw-bold p-0"
+          <li class="nav-item">
+            <button type="button"
+             class="navbartBtn focusNone btn position-relative fw-bold px-2 px-md-3"
              @click="openModal">
               <i class="bi bi-cart3"></i>
-              <span class="cartNum btn-primary rounded-circle position-absolute">
+              <span class="navbarIconNum btn-primary rounded-circle position-absolute">
                 {{cart.length}}
               </span>
             </button>
@@ -52,6 +58,10 @@
     <div class="mobileMenuItem col">
       <router-link to="/getcoupon"
        class="mobileMenuItemLink btn btn-primary focusNone fw-bold">優惠活動</router-link>
+    </div>
+    <div class="mobileMenuItem col">
+      <router-link to="/checkingOrder"
+       class="mobileMenuItemLink btn btn-primary focusNone fw-bold">訂單查詢</router-link>
     </div>
   </div>
   <CartModal ref="cartModal" :cart="cart" @get-cart="getCart"></CartModal>
@@ -114,17 +124,9 @@ export default {
     transition: .5s;
   }
 }
-.cartNum{
-  top: -8px;
-  right: -12px;
-  width: 20px;
-  height: 20px;
-  font-size: 12px;
-  line-height: 20px;
-}
-.favoriteNum{
-  top: -8px;
-  right: -12px;
+.navbarIconNum{
+  top: -2px;
+  right: 2px;
   width: 20px;
   height: 20px;
   font-size: 12px;
@@ -160,6 +162,9 @@ export default {
     padding: 0.5rem 1rem;
     text-decoration: none;
     border-radius: 0;
+    @include media-414() {
+      padding: 0.5rem 0.5rem;
+    }
   }
 }
 </style>
