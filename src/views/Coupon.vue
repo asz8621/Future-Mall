@@ -1,10 +1,11 @@
 <template>
   <div class="coupon containerTop" data-aos="zoom-in">
-    <div class="d-flex flex-column justify-content-center overflow-hidden">
-      <h1 class="pageTitle position-relative text-center mb-5 p-2">
-        <span class="fs-2">Coupon</span><br>
-        <span class="fs-4">優惠劵</span>
-      </h1>
+    <h1 class="pageTitle position-relative text-center mb-5 p-2">
+      <span class="fs-2">Coupon</span><br>
+      <span class="fs-4">優惠劵</span>
+    </h1>
+    <p class="text-center fs-4 mb-5">3 選 1 來試看看你今天的手氣，有機會獲得超值優惠的折價劵</p>
+    <div class="overflow-hidden mb-5">
       <div class="row g-2 g-sm-3 g-lg-5 g-xl-max">
         <div class="col">
           <div class="drawCard bg-cover border d-flex justify-content-center align-items-center
@@ -33,7 +34,7 @@
       </div>
       <div class="message text-center my-3"
        :class="[{'show' : animationOver}, winning ?'text-success':'text-persimmon']">
-        <p>{{message}}</p>
+        <p :class="{'m-0': !winning}">{{message}}</p>
         <div v-if="winning" class="d-flex justify-content-center">
           <span class="fs-4 text-persimmon me-2">{{codeText}}</span>
           <button type="button" class="btn btn-success fw-bold" @click="copyCode">
@@ -133,9 +134,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-  .coupon{
-    height: calc(100vh - 120px - 56px);
-  }
   .drawCard{
     font-size: 1.5rem;
     height: 400px;
@@ -144,6 +142,8 @@ export default {
     letter-spacing: 1rem;
     transform: scale(1);
     transition: .5s;
+    border-radius: 5px;
+    user-select: none;
     &:hover{
       transform: scale(1.025);
     }
@@ -176,6 +176,10 @@ export default {
     }
   }
   .message{
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     opacity: 0;
     transition: .5s;
     &.show{
