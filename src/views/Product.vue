@@ -11,14 +11,14 @@
           <button type="button"
            class="preBtn btn btn-outline-primary focusNone position-absolute top-50 start-0
            translate-middle-y border-0 fs-2"
-           v-if="product.num !== products.length" @click="preProduct(product.num,'pre')">
+           v-if="product.num !== products.length" @click="switchProduct(product.num,'pre')">
             <i class="bi bi-chevron-left"></i>
            </button>
           <img :src="product.imageUrl" :alt="product.title" class="img-fluid">
           <button type="button"
            class="nextBtn btn btn-outline-primary focusNone position-absolute top-50 end-0
            translate-middle-y border-0 fs-2"
-           v-if="product.num !== 1" @click="preProduct(product.num,'next')">
+           v-if="product.num !== 1" @click="switchProduct(product.num,'next')">
             <i class="bi bi-chevron-right"></i>
            </button>
         </div>
@@ -58,7 +58,7 @@
                :disabled="qty === 1 || btnLoading === product.id">-</button>
               <input type="number" class="outlineNone border-0 border-top border-bottom
                border-secondary text-center w-100"
-               min="1" v-model="qty" @change="checkNum" :disabled="btnLoading === product.id">
+               min="1" v-model="qty" :disabled="btnLoading === product.id">
               <button type="button"
                class="focusNone btn btn-secondary rounded-0"
                @click="calculateNum('+')" :disabled="btnLoading === product.id">+</button>
@@ -81,15 +81,28 @@
       </div>
     </div>
   </div>
+
+  <div class="row mb-5">
+    <h2>相關產品</h2>
+    <RelatedProducts class="px-3" :relatedProducts="relatedProducts"
+     @changeProduct="getProduct"></RelatedProducts>
+  </div>
+
 </template>
 
 <script>
+import RelatedProducts from '@/components/frontend/RelatedProducts.vue';
+
 export default {
+  components: {
+    RelatedProducts,
+  },
   data() {
     return {
       id: '',
       product: {},
       products: [],
+      relatedProducts: [],
       favoriteList: [],
       isLoading: false,
       btnLoading: '',
@@ -98,10 +111,21 @@ export default {
   },
   inject: ['emitter'],
   created() {
-    this.getAllProduct();
     this.getProduct();
   },
+  watch: {
+    qty() {
+      if (this.qty < 1) this.qty = 1;
+    },
+  },
   methods: {
+    scrollTop() {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth',
+      });
+    },
     getAllProduct() {
       let data = [];
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
@@ -114,6 +138,10 @@ export default {
               num: item.num,
             });
           });
+          this.relatedProducts = data.filter((item) => item.category === this.product.category
+           && item.id !== this.id);
+          this.isLoading = false;
+          this.scrollTop();
         }
       });
     },
@@ -124,20 +152,20 @@ export default {
       } else {
         this.id = this.$route.params.id;
       }
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${this.id}`;
       this.isLoading = true;
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${this.id}`;
       this.$http.get(api).then((res) => {
         if (res.data.success) {
           this.product = res.data.product;
-          this.isLoading = false;
           // 是否是收藏商品
           if (this.favoriteList.indexOf(this.product.id) !== -1) {
             this.product.favorite = true;
           }
+          this.getAllProduct();
         }
       });
     },
-    preProduct(num, state) {
+    switchProduct(num, state) {
       let newNum = num;
       if (state === 'next') {
         newNum -= 2;
@@ -147,9 +175,6 @@ export default {
         this.$router.push(`/product/${this.products[num].id}`);
         this.getProduct(this.products[num].id);
       }
-    },
-    checkNum() {
-      if (this.qty < 1) this.qty = 1;
     },
     calculateNum(symbol) {
       if (symbol === '-') {
