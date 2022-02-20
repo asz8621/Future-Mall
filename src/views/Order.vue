@@ -7,12 +7,12 @@
   </Loading>
 
   <!-- Navbar -->
-  <div class="orderNavbar text-center my-3 mb-sm-5">
+  <div class="orderNavbar text-center my-3 mb-sm-5" data-aos="zoom-in">
     <img src="../assets/logo.png" alt="" class="logo">
   </div>
 
   <!-- fixed-bottom -->
-  <div class="fixed-bottom border-top bg-white py-3 w-100">
+  <div class="fixed-bottom border-top bg-white py-3 w-100" data-aos="zoom-in">
     <div class="container">
 
       <template v-if="!isFinish">
@@ -81,7 +81,7 @@
     </div>
   </div>
 
-  <div class="position-relative">
+  <div class="position-relative" data-aos="zoom-in">
 
      <!-- 流程圖 -->
     <div class="line"

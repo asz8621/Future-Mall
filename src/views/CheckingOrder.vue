@@ -5,7 +5,7 @@
     </div>
   </Loading>
 
-  <div class="checkingOrder containerTop g-1">
+  <div class="checkingOrder containerTop g-1" data-aos="zoom-in">
     <h1 class="pageTitle position-relative text-center mb-5 p-2">
       <span class="fs-2">Checking Order</span><br>
       <span class="fs-4">查詢訂單</span>

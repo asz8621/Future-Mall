@@ -4,7 +4,7 @@
       <img src="../assets/loading.png" alt="loading" class="img-fluid">
     </div>
   </Loading>
-  <div class="products containerTop mb-5">
+  <div class="products containerTop mb-5" data-aos="zoom-in">
     <div class="stickyTopMenu sticky-top bg-white border-bottom text-center mb-3">
       <ul class="d-inline-flex justify-content-center align-items-center
        list-unstyled mt-3 mb-4">

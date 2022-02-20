@@ -4,7 +4,7 @@
       <img src="../assets/loading.png" alt="loading" class="img-fluid">
     </div>
   </Loading>
-  <div class="favorite containerTop mb-5">
+  <div class="favorite containerTop mb-5" data-aos="zoom-in">
     <h1 class="pageTitle position-relative text-center mb-5 p-2">
       <span class="fs-2">Favorites List</span><br>
       <span class="fs-4">收藏清單</span>

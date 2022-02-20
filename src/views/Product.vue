@@ -82,7 +82,7 @@
     </div>
   </div>
 
-  <div class="row mb-5">
+  <div v-if="relatedProducts.length !== 0" class="row mb-5" data-aos="fade-up">
     <h2>相關產品</h2>
     <RelatedProducts class="px-3" :relatedProducts="relatedProducts"
      @changeProduct="getProduct"></RelatedProducts>
