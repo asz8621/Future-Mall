@@ -5,7 +5,7 @@
     </div>
   </Loading>
 
-  <div class="return containerTop g-1">
+  <div class="return containerTop g-1" data-aos="zoom-in">
     <h1 class="pageTitle position-relative text-center mb-5 p-2">
       <span class="fs-2">Return Request Form</span><br>
       <span class="fs-4">退貨申請表</span>
