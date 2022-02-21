@@ -3,6 +3,7 @@
   <table class="table mt-4">
     <thead>
       <tr class="text-center">
+        <th width="200">訂單日期</th>
         <th width="250">訂單編號</th>
         <th>姓名</th>
         <th>電話</th>
@@ -14,6 +15,7 @@
     </thead>
     <tbody>
       <tr v-for="item in orders" :key="item.id" class="text-center">
+        <td>{{$filters.date(item.create_at * 1000)}}</td>
         <td>{{item.id}}</td>
         <td>{{item.user.name}}</td>
         <td>{{item.user.tel}}</td>
@@ -73,6 +75,7 @@ export default {
           this.orders = res.data.orders;
           this.pagination = res.data.pagination;
           this.isLoading = false;
+          console.log(this.orders);
         }
       });
     },

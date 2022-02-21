@@ -34,6 +34,10 @@
             <table class="table" v-if="tempOrder.user">
               <tbody>
                 <tr>
+                  <th width="100">訂單日期</th>
+                  <td>{{$filters.date(tempOrder.create_at * 1000)}}</td>
+                </tr>
+                <tr>
                   <th width="100">訂單編號</th>
                   <td>{{tempOrder.id}}</td>
                 </tr>
